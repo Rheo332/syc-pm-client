@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using syc_pm_client.Services;
-using syc_pm_client.Services.NewFolder;
+using syc_pm_client.Services.Interfaces;
 using syc_pm_client.Viewmodels;
 using syc_pm_client.Views;
 

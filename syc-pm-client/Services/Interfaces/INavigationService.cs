@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace syc_pm_client.Services.NewFolder
+namespace syc_pm_client.Services.Interfaces
 {
     public interface INavigationService
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
-using syc_pm_client.Services.NewFolder;
+using syc_pm_client.Services.Interfaces;
 using System;
 
 namespace syc_pm_client.Services
