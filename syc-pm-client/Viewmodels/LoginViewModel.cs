@@ -2,9 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using syc_pm_client.Services.Interfaces;
 using syc_pm_client.Views;
-using System;
 using System.Threading.Tasks;
-using Windows.UI.Popups;
 
 namespace syc_pm_client.Viewmodels
 {
@@ -13,10 +11,10 @@ namespace syc_pm_client.Viewmodels
         private readonly INavigationService _nav;
 
         [ObservableProperty]
-        private string username;
+        public partial string? Username { get; set; }
 
         [ObservableProperty]
-        private string password;
+        public partial string? Password { get; set; }
 
         public LoginViewModel(INavigationService nav)
         {

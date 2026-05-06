@@ -8,7 +8,7 @@ namespace syc_pm_client.Services
     public class NavigationService : INavigationService
     {
         private readonly IServiceProvider _provider;
-        private Frame _frame;
+        private Frame? _frame;
 
         public NavigationService(IServiceProvider provider)
         {
@@ -23,7 +23,7 @@ namespace syc_pm_client.Services
         public void Navigate<T>() where T : Page
         {
             var page = _provider.GetRequiredService<T>();
-            _frame.Content = page;
+            _frame!.Content = page;
         }
     }
 }
