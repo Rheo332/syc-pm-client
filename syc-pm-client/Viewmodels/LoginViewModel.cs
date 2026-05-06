@@ -2,6 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using syc_pm_client.Services.NewFolder;
 using syc_pm_client.Views;
+using System;
+using System.Threading.Tasks;
+using Windows.UI.Popups;
 
 namespace syc_pm_client.Viewmodels
 {
@@ -21,11 +24,13 @@ namespace syc_pm_client.Viewmodels
         }
 
         [RelayCommand]
-        private void Login()
+        private async Task Login()
         {
-            // TODO: Implement login logic here
+            if (Username != null && Username != "Kevin")
+            {
+                _nav.Navigate<MainPage>();
+            }
 
-            _nav.Navigate<MainPage>();
         }
     }
 
