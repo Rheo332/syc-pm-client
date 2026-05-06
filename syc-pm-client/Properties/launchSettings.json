@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "syc-pm-client (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "syc-pm-client (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
