@@ -79,9 +79,9 @@
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
   </PropertyGroup>
   <ItemGroup>
-    <EditorConfigFiles Remove="C:\Users\qbbqb\Desktop\dev\syc-pm-client\syc-pm-client\.editorconfig" />
+    <EditorConfigFiles Remove="$(ProjectDir).editorconfig" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="C:\Users\qbbqb\Desktop\dev\syc-pm-client\syc-pm-client\.editorconfig" />
+    <None Include="$(ProjectDir).editorconfig" />
   </ItemGroup>
 </Project>
