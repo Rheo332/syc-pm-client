@@ -9,6 +9,6 @@
     mc:Ignorable="d">
 
     <Grid>
-
+        <Button Background="AliceBlue" Content="Logout" Command="{Binding LogoutCommand}" />
     </Grid>
 </Page>
