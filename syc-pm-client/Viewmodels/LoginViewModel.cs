@@ -2,8 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using syc_pm_client.Services.Interfaces;
 using syc_pm_client.Views;
-using System.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 
 namespace syc_pm_client.Viewmodels
 {

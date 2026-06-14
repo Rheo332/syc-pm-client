@@ -1,8 +1,8 @@
 using syc_pm_client.Services.Interfaces;
+using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using System;
 
 namespace syc_pm_client.Services
 {
@@ -26,7 +26,6 @@ namespace syc_pm_client.Services
             if (resp.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 return false;
 
-            // For other errors, throw to let caller display message
             resp.EnsureSuccessStatusCode();
             return false;
         }
