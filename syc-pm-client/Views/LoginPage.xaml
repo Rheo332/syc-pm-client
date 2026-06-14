@@ -13,14 +13,18 @@
         <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
     </Page.Resources>
 
-    <StackPanel Background="Black" Padding="24" Spacing="12">
-        <TextBlock Foreground="White" FontSize="20" Text="Please sign in" />
+    <Grid>
+        <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="360" Padding="32" CornerRadius="8" Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1">
+            <StackPanel Spacing="16">
+                <TextBlock FontSize="28" FontWeight="SemiBold" Text="Welcome!" HorizontalAlignment="Center" Margin="0,0,0,8" />
 
-        <TextBox  PlaceholderText="Username" Text="{Binding Username, Mode=TwoWay}" />
-        <PasswordBox PlaceholderText="Password" PasswordChar="●" x:Name="PasswordBox" />
+                <TextBox Header="Username" PlaceholderText="Enter your username" Text="{Binding Username, Mode=TwoWay}" />
+                <PasswordBox Header="Password" PlaceholderText="Enter your password" PasswordChar="●" x:Name="PasswordBox" />
 
-        <TextBlock Foreground="Tomato" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}" />
+                <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}" TextWrapping="Wrap" />
 
-        <Button Background="AliceBlue" Content="Login" Command="{Binding LoginCommand}" />
-    </StackPanel>
+                <Button Content="Login" Command="{Binding LoginCommand}" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" Margin="0,12,0,0" />
+            </StackPanel>
+        </Border>
+    </Grid>
 </Page>
