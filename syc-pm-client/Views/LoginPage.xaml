@@ -5,12 +5,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:syc_pm_client.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:converters="using:syc_pm_client.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="using:syc_pm_client.Viewmodels" d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
     mc:Ignorable="d">
 
-    <StackPanel Background="black">
+    <Page.Resources>
+        <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+    </Page.Resources>
+
+    <StackPanel Background="Black" Padding="24" Spacing="12">
+        <TextBlock Foreground="White" FontSize="20" Text="Please sign in" />
+
         <TextBox  PlaceholderText="Username" Text="{Binding Username, Mode=TwoWay}" />
-       
+        <PasswordBox PlaceholderText="Password" PasswordChar="●" x:Name="PasswordBox" />
+
+        <TextBlock Foreground="Tomato" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}" />
+
         <Button Background="AliceBlue" Content="Login" Command="{Binding LoginCommand}" />
     </StackPanel>
 </Page>

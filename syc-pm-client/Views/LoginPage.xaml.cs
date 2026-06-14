@@ -15,6 +15,12 @@ namespace syc_pm_client.Views
         {
             InitializeComponent();
             DataContext = vm;
+
+            // Bind PasswordBox password to ViewModel (Password property) manually
+            PasswordBox.PasswordChanged += (s, e) =>
+            {
+                vm.Password = PasswordBox.Password;
+            };
         }
     }
 }
