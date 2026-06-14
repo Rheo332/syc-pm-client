@@ -1,5 +1,7 @@
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using syc_pm_client.Viewmodels;
+using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -16,11 +18,19 @@ namespace syc_pm_client.Views
             InitializeComponent();
             DataContext = vm;
 
-            // Bind PasswordBox password to ViewModel (Password property) manually
             PasswordBox.PasswordChanged += (s, e) =>
             {
                 vm.Password = PasswordBox.Password;
             };
+        }
+
+        private void Login_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                var vm = DataContext as LoginViewModel;
+                vm?.LoginCommand.Execute(null);
+            }
         }
     }
 }
