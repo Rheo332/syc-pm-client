@@ -31,6 +31,14 @@ namespace syc_pm_client
                 {
                     // Services
                     services.AddSingleton<INavigationService, NavigationService>();
+                    services.AddSingleton<IAuthenticationService>(sp =>
+                    {
+                        var client = new System.Net.Http.HttpClient
+                        {
+                            BaseAddress = new System.Uri("https://csy-projektarbeit.studlp2.hshl.de/")
+                        };
+                        return new AuthenticationService(client);
+                    });
 
                     // Views
                     services.AddTransient<LoginPage>();
