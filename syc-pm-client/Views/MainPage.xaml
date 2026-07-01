@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
 
         <Border 
-            BorderBrush="Green"
+            BorderBrush="Transparent"
             BorderThickness="1,1,1,1"
             Padding="10"
             Grid.Column="0">
@@ -110,9 +110,10 @@
 
         </Border>
 
-        <Border BorderBrush="Red"
+        <Border BorderBrush="Transparent"
                 BorderThickness="1,1,1,1"
                 Padding="10"
+                Margin="0"
                 Grid.Column="1">
 
             <Grid x:Name="Accountdetails">
@@ -156,10 +157,11 @@
                 </StackPanel>
 
                 <StackPanel
+                    Grid.Row="1"
                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Grid.Row="1"
+                    Margin="10"
                     Padding="20">
 
                     <TextBlock x:Name="DetailsName"
