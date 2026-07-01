@@ -9,6 +9,213 @@
     mc:Ignorable="d">
 
     <Grid>
-        <Button Background="AliceBlue" Content="Logout" Command="{Binding LogoutCommand}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="Accounts"
+                Grid.Column="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.4*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="0.6*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Button x:Name="LogoutButton"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Width="50"
+                    Margin="10"
+                    Background="HotPink"
+                    Command="{Binding LogoutCommand}">
+                    <SymbolIcon Symbol="Cancel" />
+                </Button>
+
+                <TextBox x:Name="SearchBox"
+                     Grid.Row="0"
+                     Grid.Column="1"
+                     HorizontalAlignment="Center"
+                     PlaceholderText="Search..."
+                     Margin="10"
+                     Width="500"/>
+
+                <StackPanel Grid.Row="0"
+                        Grid.Column="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+
+                    <Button x:Name="FilterButton"
+                        Width="50"
+                        Margin="10"
+                        Background="HotPink"
+                        Command="{Binding FilterCommand}">
+                        <SymbolIcon Symbol="Filter" />
+                    </Button>
+
+                    <Button x:Name="AddItemButton"
+                        Width="50"
+                        Margin="10"
+                        Background="HotPink"
+                        Command="{Binding AddItemCommand}">
+                        <SymbolIcon Symbol="Add" />
+                    </Button>
+
+                </StackPanel>
+
+
+            <Border x:Name="AccountsHorizontalBorder"
+                    BorderBrush="AliceBlue"
+                    BorderThickness="0,1,0,0"
+                    Padding="0"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3">
+
+                <ListView x:Name="AccountsList"
+                          HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding Accounts}"
+                          Margin="10">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Border Padding="5"
+                                    Margin="5"
+                                    Height="100"
+                                    CornerRadius="10">
+
+                                <StackPanel Margin="5">
+                                    <TextBlock Text="{Binding Name}" FontSize="16" />
+                                    <TextBlock Text="{Binding URL}" FontSize="14" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
+            
+            </Border>
+
+        </Grid>
+
+        <Border x:Name="VerticalBorder"
+                BorderBrush="AliceBlue"
+                BorderThickness="1,0,0,0"
+                Padding="0"
+                Grid.Column="1">
+
+            <Grid x:Name="Accountdetails">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Button x:Name="Close"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Width="50"
+                    Margin="10"
+                    Background="Hotpink"
+                    Command="{Binding CloseCommand}">
+                    <SymbolIcon Symbol="Cancel" />
+                </Button>
+
+                <TextBlock Text="Account Details"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="20"/>
+
+                <StackPanel x:Name="DetailsButtons"
+                        Orientation="Horizontal"
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        HorizontalAlignment="Right">
+
+                    <Button x:Name="DeleteItemButton"
+                        Width="50"
+                        Margin="10"
+                        Background="HotPink"
+                        Command="{Binding DeleteItemCommand}">
+                        <SymbolIcon Symbol="Delete" />
+                    </Button>
+
+                    <Button x:Name="EditItemButton"
+                        Width="50"
+                        Margin="10"
+                        Background="HotPink"
+                        Command="{Binding EditItemCommand}">
+                        <SymbolIcon Symbol="Edit" />
+                    </Button>
+
+                </StackPanel>
+
+
+                <Border x:Name="DetailsHorizontalBorder"
+                    BorderBrush="AliceBlue"
+                    BorderThickness="0,1,0,0"
+                    Padding="0"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3">
+
+                    <ListView x:Name="AccountDetails"
+                        ItemsSource="{Binding SelectedAccounts}">
+
+                        <StackPanel
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top">
+                            <TextBlock x:Name="DetailsPlaceholder"
+                           Text="Kein Eintrag ausgewählt"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="20"/>
+                            <TextBlock x:Name="DetailsName"
+                                   DataContext="{Binding SelectedAccounts.Name}"
+                         Margin="10"
+                         FontSize="16"/>
+                            <TextBlock x:Name="DetailsUsername"
+                                   DataContext="{Binding SelectedAccounts.Username}"
+                         Margin="10"
+                         FontSize="16"/>
+                            <TextBlock x:Name="DetailsMail"
+                                   DataContext="{Binding SelectedAccounts.Email}"
+                         Margin="10"
+                         FontSize="16"/>
+                            <TextBlock x:Name="DetailsPassword"
+                                   DataContext="{Binding SelectedAccounts.Password}"
+                         Margin="10"
+                         FontSize="16"/>
+                            <TextBlock x:Name="DetailsURL"
+                                   DataContext="{Binding SelectedAccounts.URL}"
+                         Margin="10"
+                         FontSize="16"/>
+                            <TextBlock x:Name="DetailsNotes"
+                                   DataContext="{Binding SelectedAccounts.Notes}"
+                         Margin="10"
+                         FontSize="16"/>
+                        </StackPanel>
+                    </ListView>
+                </Border>
+            </Grid>
+        </Border>
     </Grid>
 </Page>
