@@ -35,7 +35,8 @@ namespace syc_pm_client
                     {
                         var client = new System.Net.Http.HttpClient
                         {
-                            BaseAddress = new System.Uri("https://csy-projektarbeit.studlp2.hshl.de/")
+                            //BaseAddress = new System.Uri("https://csy-projektarbeit.studlp2.hshl.de/")
+                            BaseAddress = new System.Uri("https://localhost:7166/")
                         };
                         return new AuthenticationService(client);
                     });
