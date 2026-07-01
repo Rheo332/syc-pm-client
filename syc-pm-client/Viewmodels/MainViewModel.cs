@@ -23,13 +23,17 @@ namespace syc_pm_client.Viewmodels
             _nav.Navigate<LoginPage>();
         }
 
-        public ObservableCollection<Accounts> Accounts { get; } = new();
+        [ObservableProperty]
+        private ObservableCollection<Account> accounts = new();
+
+        [ObservableProperty]
+        private Account? selectedAccount;
 
         private void LoadDummyData()
         {
 
             for (int i = 0; i < 10; i++)
-                Accounts.Add(new Accounts
+                Accounts.Add(new Account
                 {
                     Name = $"Account {i + 1}",
                     Username = $"user{i + 1}",
@@ -41,7 +45,7 @@ namespace syc_pm_client.Viewmodels
         }
     }
 
-    public class Accounts
+    public class Account
     {
         public string Name { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
