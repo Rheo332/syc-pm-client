@@ -13,5 +13,16 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Frame x:Name="MainFrame" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="TitleBar"/>
+
+        <Frame
+            x:Name="MainFrame"
+            Grid.Row="1"/>
+    </Grid>
 </Window>

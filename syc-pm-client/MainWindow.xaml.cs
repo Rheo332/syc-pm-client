@@ -20,7 +20,7 @@ namespace syc_pm_client
             InitializeComponent();
 
             ExtendsContentIntoTitleBar = true;
-            SetTitleBar(MainFrame);
+            SetTitleBar(TitleBar);
 
             var hWnd = WindowNative.GetWindowHandle(this);
             var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
