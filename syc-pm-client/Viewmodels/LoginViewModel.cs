@@ -11,6 +11,7 @@ namespace syc_pm_client.Viewmodels
     {
         private readonly INavigationService _nav;
         private readonly IAuthenticationService _auth;
+        private readonly IUserSessionService _userSession;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
@@ -38,10 +39,11 @@ namespace syc_pm_client.Viewmodels
             set => SetProperty(ref _errorMessage, value);
         }
 
-        public LoginViewModel(INavigationService nav, IAuthenticationService auth)
+        public LoginViewModel(INavigationService nav, IAuthenticationService auth, IUserSessionService userSession)
         {
             _nav = nav;
             _auth = auth;
+            _userSession = userSession;
         }
 
         private bool CanLogin()
@@ -57,14 +59,16 @@ namespace syc_pm_client.Viewmodels
                 IsBusy = true;
                 ErrorMessage = null;
 
-                var success = await _auth.LoginAsync(Username ?? string.Empty, Password ?? string.Empty);
-                if (success)
+                var user = await _auth.LoginAsync(Username ?? string.Empty, Password ?? string.Empty);
+
+                if (!string.IsNullOrEmpty(user?.Username))
                 {
+                    _userSession.Login(user);
                     _nav.Navigate<MainPage>();
                 }
                 else
                 {
-                    ErrorMessage = "Invalid username or password.";
+                    ErrorMessage = "Login failed: Invalid username or password.";
                 }
             }
             catch (Exception ex)

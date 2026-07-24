@@ -30,6 +30,7 @@ namespace syc_pm_client
                 .ConfigureServices((context, services) =>
                 {
                     // Services
+                    services.AddSingleton<IUserSessionService, UserSessionService>();
                     services.AddSingleton<INavigationService, NavigationService>();
                     services.AddSingleton<IAuthenticationService>(sp =>
                     {

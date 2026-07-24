@@ -10,16 +10,21 @@ namespace syc_pm_client.Viewmodels
     public partial class MainViewModel : ObservableObject
     {
         private readonly INavigationService _nav;
-        public MainViewModel(INavigationService nav)
+        private readonly IUserSessionService _userSession;
+
+        public MainViewModel(INavigationService nav, IUserSessionService userSession)
         {
             _nav = nav;
+            _userSession = userSession;
 
+            // LoadDataAsync()
             LoadDummyData();
         }
 
         [RelayCommand]
         private async Task Logout()
         {
+            _userSession.Logout();
             _nav.Navigate<LoginPage>();
         }
 
@@ -42,6 +47,12 @@ namespace syc_pm_client.Viewmodels
                     URL = $"https://www.example.com/user{i + 1}",
                     Notes = $"Notes for Account {i + 1}"
                 });
+        }
+
+        private async Task<bool> LoadDataAsync()
+        {
+
+            return true;
         }
     }
 
