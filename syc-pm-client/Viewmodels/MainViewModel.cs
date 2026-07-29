@@ -11,14 +11,15 @@ namespace syc_pm_client.Viewmodels
     {
         private readonly INavigationService _nav;
         private readonly IUserSessionService _userSession;
+        private readonly IPwEntryService _pwEntryService;
 
-        public MainViewModel(INavigationService nav, IUserSessionService userSession)
+        public MainViewModel(INavigationService nav, IUserSessionService userSession, IPwEntryService pwEntryService)
         {
             _nav = nav;
             _userSession = userSession;
+            _pwEntryService = pwEntryService;
 
-            // LoadDataAsync()
-            LoadDummyData();
+            // LoadDummyData();
         }
 
         [RelayCommand]
@@ -42,15 +43,28 @@ namespace syc_pm_client.Viewmodels
                 {
                     Name = $"Account {i + 1}",
                     Username = $"user{i + 1}",
-                    Email = $"user{i + 1}@example.com",
                     Password = "Password",
                     URL = $"https://www.example.com/user{i + 1}",
                     Notes = $"Notes for Account {i + 1}"
                 });
         }
 
-        private async Task<bool> LoadDataAsync()
+        public async Task<bool> LoadDataAsync()
         {
+            Accounts.Clear();
+            var pwEntries = await _pwEntryService.GetPwEntries();
+
+            foreach (var entry in pwEntries)
+            {
+                Accounts.Add(new Account
+                {
+                    Name = entry.Title,
+                    Username = entry.Username,
+                    Password = entry.DecryptedPassword,
+                    URL = "noch nicht vorhanden",
+                    Notes = entry.Description
+                });
+            }
 
             return true;
         }
@@ -60,7 +74,6 @@ namespace syc_pm_client.Viewmodels
     {
         public string Name { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string URL { get; set; } = string.Empty;
         public string Notes { get; set; } = string.Empty;

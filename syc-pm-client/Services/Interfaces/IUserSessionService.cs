@@ -4,7 +4,8 @@ namespace syc_pm_client.Services.Interfaces
 {
     public interface IUserSessionService
     {
-        public void Login(User user);
-        public void Logout();
+        User? CurrentUser { get; }
+        void Login(User user);
+        void Logout();
     }
 }

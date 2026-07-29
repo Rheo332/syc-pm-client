@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using syc_pm_client.Viewmodels;
 
@@ -15,6 +16,15 @@ namespace syc_pm_client.Views
         {
             InitializeComponent();
             DataContext = vm;
+
+            Loaded += MainPage_Loaded;
+        }
+
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= MainPage_Loaded;
+
+            await ((MainViewModel)DataContext).LoadDataAsync();
         }
     }
 }

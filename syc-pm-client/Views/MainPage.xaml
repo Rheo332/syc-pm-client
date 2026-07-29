@@ -164,30 +164,65 @@
                     Margin="10"
                     Padding="20">
 
-                    <TextBlock x:Name="DetailsName"
-                            Text="{Binding SelectedAccount.Name}"
-                            Margin="10"
-                            FontSize="16"/>
-                    <TextBlock x:Name="DetailsUsername"
-                            Text="{Binding SelectedAccount.Username}"
-                            Margin="10"
-                            FontSize="16"/>
-                    <TextBlock x:Name="DetailsMail"
-                            Text="{Binding SelectedAccount.Email}"
-                            Margin="10"
-                            FontSize="16"/>
-                    <TextBlock x:Name="DetailsPassword"
-                            Text="{Binding SelectedAccount.Password}"
-                            Margin="10"
-                            FontSize="16"/>
-                    <TextBlock x:Name="DetailsURL"
-                            Text="{Binding SelectedAccount.URL}"
-                            Margin="10"
-                            FontSize="16"/>
-                    <TextBlock x:Name="DetailsNotes"
-                            Text="{Binding SelectedAccount.Notes}"
-                            Margin="10"
-                            FontSize="16"/>
+
+                    <Grid RowSpacing="12" ColumnSpacing="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Title:"
+                           FontWeight="SemiBold"
+                           FontSize="16"/>
+                        <TextBlock Grid.Column="1"
+                           Text="{Binding SelectedAccount.Name}"
+                           FontSize="16"/>
+
+                        <TextBlock Grid.Row="1"
+                           Text="Username:"
+                           FontWeight="SemiBold"
+                           FontSize="16"/>
+                        <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding SelectedAccount.Username}"
+                           FontSize="16"/>
+
+                        <TextBlock Grid.Row="2"
+                           Text="Password:"
+                           FontWeight="SemiBold"
+                           FontSize="16"/>
+                        <TextBlock Grid.Row="2"
+                           Grid.Column="1"
+                           Text="{Binding SelectedAccount.Password}"
+                           FontSize="16"/>
+
+                        <TextBlock Grid.Row="3"
+                           Text="URL:"
+                           FontWeight="SemiBold"
+                           FontSize="16"/>
+                        <TextBlock Grid.Row="3"
+                           Grid.Column="1"
+                           Text="{Binding SelectedAccount.URL}"
+                           FontSize="16"/>
+
+                        <TextBlock Grid.Row="4"
+                           Text="Description:"
+                           FontWeight="SemiBold"
+                           FontSize="16"/>
+                        <TextBlock Grid.Row="4"
+                           Grid.Column="1"
+                           Text="{Binding SelectedAccount.Notes}"
+                           FontSize="16"
+                           TextWrapping="Wrap"/>
+                    </Grid>
                 </StackPanel>
             </Grid>
             

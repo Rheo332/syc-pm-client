@@ -29,18 +29,18 @@ namespace syc_pm_client
             Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
+                    // Shared HttpClient
+                    services.AddSingleton(sp => new System.Net.Http.HttpClient
+                    {
+                        //BaseAddress = new System.Uri("https://csy-projektarbeit.studlp2.hshl.de/")
+                        BaseAddress = new System.Uri("https://localhost:7166/")
+                    });
+
                     // Services
                     services.AddSingleton<IUserSessionService, UserSessionService>();
                     services.AddSingleton<INavigationService, NavigationService>();
-                    services.AddSingleton<IAuthenticationService>(sp =>
-                    {
-                        var client = new System.Net.Http.HttpClient
-                        {
-                            //BaseAddress = new System.Uri("https://csy-projektarbeit.studlp2.hshl.de/")
-                            BaseAddress = new System.Uri("https://localhost:7166/")
-                        };
-                        return new AuthenticationService(client);
-                    });
+                    services.AddSingleton<IAuthenticationService, AuthenticationService>();
+                    services.AddSingleton<IPwEntryService, PwEntryService>();
 
                     // Views
                     services.AddTransient<LoginPage>();
