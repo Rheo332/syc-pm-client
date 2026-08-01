@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Cryptography;
 using System.Text;
@@ -32,8 +33,9 @@ namespace syc_pm_client.Services
 
             var user = _userSession.CurrentUser;
 
-            var getPwEntriesPayload = new { username = user.Username };
-            using var getPwEntriesResp = await _http.PostAsJsonAsync("/api/entries", getPwEntriesPayload);
+            _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+            //var getPwEntriesPayload = new { token = user.Token };
+            using var getPwEntriesResp = await _http.GetAsync("/api/entries");
             getPwEntriesResp.EnsureSuccessStatusCode();
 
             var getPwEntriesResponse = await getPwEntriesResp.Content.ReadFromJsonAsync<PwEntryResponse>();

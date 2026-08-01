@@ -61,7 +61,7 @@ namespace syc_pm_client.Viewmodels
                     Name = entry.Title,
                     Username = entry.Username,
                     Password = entry.DecryptedPassword,
-                    URL = "noch nicht vorhanden",
+                    URL = entry.Url,
                     Notes = entry.Description
                 });
             }

@@ -61,7 +61,7 @@ namespace syc_pm_client.Services
                 aesGcm.Decrypt(nonce, ciphertext, tag, decryptedPrivateKeyBytes);
             }
 
-            var user = new User { Username = username, PrivateKey = Convert.ToBase64String(decryptedPrivateKeyBytes) };
+            var user = new User { Username = username, PrivateKey = Convert.ToBase64String(decryptedPrivateKeyBytes), Token = loginResponse!.Token };
 
             return user;
         }
