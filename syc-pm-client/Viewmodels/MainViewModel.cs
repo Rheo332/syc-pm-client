@@ -29,13 +29,19 @@ namespace syc_pm_client.Viewmodels
             _nav.Navigate<LoginPage>();
         }
 
+        [RelayCommand]
+        private async Task AddEntry()
+        {
+            _nav.Navigate<AddEntryPage>();
+        }
+
         [ObservableProperty]
         private ObservableCollection<Account> accounts = new();
 
         [ObservableProperty]
         private Account? selectedAccount;
 
-        private void LoadDummyData()
+        /*private void LoadDummyData()
         {
 
             for (int i = 0; i < 10; i++)
@@ -47,7 +53,7 @@ namespace syc_pm_client.Viewmodels
                     URL = $"https://www.example.com/user{i + 1}",
                     Notes = $"Notes for Account {i + 1}"
                 });
-        }
+        }*/
 
         public async Task<bool> LoadDataAsync()
         {

@@ -70,7 +70,7 @@
                     <Button x:Name="AddItemButton"
                             Width="50"
                             Background="DarkGoldenrod"
-                            Command="{Binding AddItemCommand}">
+                            Command="{Binding AddEntryCommand}">
                         <SymbolIcon Symbol="Add" />
                     </Button>
                 </StackPanel>

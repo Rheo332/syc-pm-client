@@ -15,6 +15,7 @@
 	<LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Views\AddEntryPage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
     <None Remove="Views\MainPage.xaml" />
   </ItemGroup>
@@ -80,5 +81,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ProjectDir).editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\AddEntryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

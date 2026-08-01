@@ -34,7 +34,6 @@ namespace syc_pm_client.Services
             var user = _userSession.CurrentUser;
 
             _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
-            //var getPwEntriesPayload = new { token = user.Token };
             using var getPwEntriesResp = await _http.GetAsync("/api/entries");
             getPwEntriesResp.EnsureSuccessStatusCode();
 
@@ -75,6 +74,19 @@ namespace syc_pm_client.Services
             }
 
             return pwEntries;
+        }
+
+        public async Task<bool> AddPwEntry(PwEntry entry)
+        {
+            if (_userSession.CurrentUser == null)
+            {
+                return false;
+            }
+            var user = _userSession.CurrentUser;
+            _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+            using var addPwEntryResp = await _http.PostAsJsonAsync("/api/entries", entry);
+            addPwEntryResp.EnsureSuccessStatusCode();
+            return true;
         }
     }
 }
