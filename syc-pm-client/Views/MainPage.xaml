@@ -15,8 +15,8 @@
 
     <Grid Margin="0,31,0,0" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="Column0" Width="1*" />
-            <ColumnDefinition x:Name="Column1" Width="0" />
+            <ColumnDefinition x:Name="Column0" Width="*" />
+            <ColumnDefinition x:Name="Column1" Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <Border 
@@ -24,11 +24,9 @@
             BorderThickness="1,1,1,1"
             Padding="10"
             Grid.Column="0">
-
             <Grid 
                 x:Name="Accounts"
                 Grid.Column="0">
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -39,7 +37,7 @@
                             Orientation="Horizontal"
                             HorizontalAlignment="Left"
                             Spacing="20"
-                            Padding="20"
+                            Padding="5"
                             Margin="0">
 
                     <TextBox x:Name="SearchBox"
@@ -83,39 +81,119 @@
 
                 <ListView x:Name="AccountsList"
                         Grid.Row="1"
-                        HorizontalAlignment="Stretch"
-                        Margin="10"
                         ItemsSource="{Binding Accounts}"
                         SelectedItem="{Binding SelectedAccount, Mode=TwoWay}"
                         IsItemClickEnabled="True"
-                        ItemClick="AccountsList_ItemClick">
-
+                        ItemClick="AccountsList_ItemClick" >
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
+                            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                            <Setter Property="Padding" Value="10,0,0,0" />
                             <Setter Property="Margin" Value="5" />
-                            <Setter Property="Padding" Value="4,2,4,2" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="CornerRadius" Value="8" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <Grid x:Name="LayoutRoot">
+                                            <Border x:Name="BackgroundBorder"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="{TemplateBinding CornerRadius}">
+                                                <ContentPresenter
+                                                    x:Name="ContentPresenter"
+                                                    Content="{TemplateBinding Content}"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                    ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    Padding="{TemplateBinding Padding}" />
+                                            </Border>
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal" />
+                                                    <VisualState x:Name="PointerOver">
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="BackgroundBorder"
+                                                                Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame
+                                                                    KeyTime="0"
+                                                                    Value="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" />
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Pressed">
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="BackgroundBorder"
+                                                                Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame
+                                                                    KeyTime="0"
+                                                                    Value="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" />
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Disabled">
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="LayoutRoot"
+                                                                Storyboard.TargetProperty="Opacity"
+                                                                To="0.5"
+                                                                Duration="0" />
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                                <VisualStateGroup x:Name="SelectionStates">
+                                                    <VisualState x:Name="Unselected" />
+                                                    <VisualState x:Name="Selected">
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="BackgroundBorder"
+                                                                Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame
+                                                                    KeyTime="0"
+                                                                    Value="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" />
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    
+                                                    <VisualState x:Name="SelectedPressed">
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="BackgroundBorder"
+                                                                Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame
+                                                                    KeyTime="0"
+                                                                    Value="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" />
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
                         </Style>
                     </ListView.ItemContainerStyle>
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Border 
-                                Padding="10"
-                                Margin="0"
-                                Height="100"
-                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Name}" FontSize="16" />
-                                    <TextBlock Text="{Binding URL}" FontSize="14" />
-                                </StackPanel>
-                            </Border>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="{Binding Name}" FontSize="18" Margin="0,5,0,0" />
+                                <TextBlock Grid.Row="1" Text="{Binding URL}" Margin="0,0,0,5" />
+                            </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
-
         </Border>
 
         <Border BorderBrush="Transparent"
@@ -126,27 +204,17 @@
             Visibility="{Binding SelectedAccount, Converter={StaticResource NullToVisibilityConverter}}">
 
             <Grid x:Name="Accountdetails">
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-
-                <StackPanel
-                    Orientation="Horizontal"
+                <TextBlock 
+                    Text="Account Details"
                     Grid.Row="0"
-                    HorizontalAlignment="Center"
-                    Spacing="20">
-
-                    <TextBlock 
-                        Text="Account Details"
-                        Grid.Row="0"
-                        FontSize="20"
-                        Margin="20"/>
-
-                </StackPanel>
-
+                    FontSize="20"
+                    Margin="20"
+                    HorizontalAlignment="Center"/>
                 <StackPanel
                     Grid.Row="1"
                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -154,8 +222,6 @@
                     VerticalAlignment="Stretch"
                     Margin="10"
                     Padding="20">
-
-
                     <Grid RowSpacing="12" ColumnSpacing="20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="120"/>
