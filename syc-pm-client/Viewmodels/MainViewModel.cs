@@ -32,7 +32,12 @@ namespace syc_pm_client.Viewmodels
         {
             if (SelectedAccount != null)
             {
-                _nav.Navigate<MakeRequestPage>();
+                _nav.Navigate<MakeRequestPage>(page =>
+                {
+                    var vm = (MakeRequestViewModel)page.DataContext;
+                    vm.RequestType = "Edit";
+                    vm.TargetEntryId = SelectedAccount.Id.ToString();
+                });
             }
         }
 
@@ -41,7 +46,12 @@ namespace syc_pm_client.Viewmodels
         {
             if (SelectedAccount != null)
             {
-                _nav.Navigate<MakeRequestPage>();
+                _nav.Navigate<MakeRequestPage>(page =>
+                {
+                    var vm = (MakeRequestViewModel)page.DataContext;
+                    vm.RequestType = "Remove";
+                    vm.TargetEntryId = SelectedAccount.Id.ToString();
+                });
             }
         }
 
