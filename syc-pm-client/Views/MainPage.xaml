@@ -52,13 +52,6 @@
                              CornerRadius="6">
                     </TextBox>
 
-                    <Button x:Name="FilterButton"
-                            Width="50"
-                            Style="{StaticResource AccentButtonStyle}"
-                            Command="{Binding FilterCommand}">
-                        <SymbolIcon Symbol="Filter" />
-                    </Button>
-
                     <Button x:Name="AddItemButton"
                             Width="50"
                             Style="{StaticResource AccentButtonStyle}"
@@ -71,6 +64,20 @@
                             Style="{StaticResource AccentButtonStyle}"
                             Command="{Binding AddUserCommand}">
                         <SymbolIcon Symbol="Contact" />
+                    </Button>
+
+                    <Button x:Name="RequestsButton"
+                            Width="50"
+                            Style="{StaticResource AccentButtonStyle}"
+                            Command="{Binding OpenRequestsCommand}">
+                        <SymbolIcon Symbol="List" />
+                    </Button>
+
+                    <Button x:Name="MakeRequestButton"
+                            Width="50"
+                            Style="{StaticResource AccentButtonStyle}"
+                            Command="{Binding OpenMakeRequestCommand}">
+                        <SymbolIcon Symbol="Message" />
                     </Button>
                 </StackPanel>
 
@@ -112,11 +119,11 @@
         </Border>
 
         <Border BorderBrush="Transparent"
-        BorderThickness="1,1,1,1"
-        Padding="10"
-        Margin="0"
-        Grid.Column="1"
-        Visibility="{Binding SelectedAccount, Converter={StaticResource NullToVisibilityConverter}}">
+            BorderThickness="1,1,1,1"
+            Padding="10"
+            Margin="0"
+            Grid.Column="1"
+            Visibility="{Binding SelectedAccount, Converter={StaticResource NullToVisibilityConverter}}">
 
             <Grid x:Name="Accountdetails">
 
@@ -127,34 +134,16 @@
 
 
                 <StackPanel
-            Orientation="Horizontal"
-            Grid.Row="0"
-            HorizontalAlignment="Center"
-            Spacing="20">
+                    Orientation="Horizontal"
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    Spacing="20">
 
                     <TextBlock 
-                Text="Account Details"
-                Grid.Row="0"
-                FontSize="20"
-                Margin="20"/>
-
-                    <!--
-            <Button x:Name="DeleteItemButton"
-                Width="50"
-                Margin="10"
-                Background="HotPink"
-                Command="{Binding DeleteItemCommand}">
-                <SymbolIcon Symbol="Delete" />
-            </Button>
-
-            <Button x:Name="EditItemButton"
-                Width="50"
-                Margin="10"
-                Background="HotPink"
-                Command="{Binding EditItemCommand}">
-                <SymbolIcon Symbol="Edit" />
-            </Button>
-            -->
+                        Text="Account Details"
+                        Grid.Row="0"
+                        FontSize="20"
+                        Margin="20"/>
 
                 </StackPanel>
 
@@ -182,53 +171,51 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Title:"
-                   FontWeight="SemiBold"
-                   FontSize="16"/>
+                           FontWeight="SemiBold"
+                           FontSize="16"/>
                         <TextBlock Grid.Column="1"
-                   Text="{Binding SelectedAccount.Name}"
-                   FontSize="16"/>
+                           Text="{Binding SelectedAccount.Name}"
+                           FontSize="16"/>
 
                         <TextBlock Grid.Row="1"
-                   Text="Username:"
-                   FontWeight="SemiBold"
-                   FontSize="16"/>
+                           Text="Username:"
+                           FontWeight="SemiBold"
+                           FontSize="16"/>
                         <TextBlock Grid.Row="1"
-                   Grid.Column="1"
-                   Text="{Binding SelectedAccount.Username}"
-                   FontSize="16"/>
+                           Grid.Column="1"
+                           Text="{Binding SelectedAccount.Username}"
+                           FontSize="16"/>
 
                         <TextBlock Grid.Row="2"
-                   Text="Password:"
-                   FontWeight="SemiBold"
-                   FontSize="16"/>
+                           Text="Password:"
+                           FontWeight="SemiBold"
+                           FontSize="16"/>
                         <TextBlock Grid.Row="2"
-                   Grid.Column="1"
-                   Text="{Binding SelectedAccount.Password}"
-                   FontSize="16"/>
+                           Grid.Column="1"
+                           Text="{Binding SelectedAccount.Password}"
+                           FontSize="16"/>
 
                         <TextBlock Grid.Row="3"
-                   Text="URL:"
-                   FontWeight="SemiBold"
-                   FontSize="16"/>
+                           Text="URL:"
+                           FontWeight="SemiBold"
+                           FontSize="16"/>
                         <TextBlock Grid.Row="3"
-                   Grid.Column="1"
-                   Text="{Binding SelectedAccount.URL}"
-                   FontSize="16"/>
+                           Grid.Column="1"
+                           Text="{Binding SelectedAccount.URL}"
+                           FontSize="16"/>
 
                         <TextBlock Grid.Row="4"
-                   Text="Description:"
-                   FontWeight="SemiBold"
-                   FontSize="16"/>
+                           Text="Description:"
+                           FontWeight="SemiBold"
+                           FontSize="16"/>
                         <TextBlock Grid.Row="4"
-                   Grid.Column="1"
-                   Text="{Binding SelectedAccount.Notes}"
-                   FontSize="16"
-                   TextWrapping="Wrap"/>
+                           Grid.Column="1"
+                           Text="{Binding SelectedAccount.Notes}"
+                           FontSize="16"
+                           TextWrapping="Wrap"/>
                     </Grid>
                 </StackPanel>
             </Grid>
-
         </Border>
-
     </Grid>
 </Page>

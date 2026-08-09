@@ -88,5 +88,29 @@ namespace syc_pm_client.Services
             addPwEntryResp.EnsureSuccessStatusCode();
             return true;
         }
+
+        public async Task<bool> UpdatePwEntry(Guid id, PwEntry entry)
+        {
+            if (_userSession.CurrentUser == null)
+            {
+                return false;
+            }
+            var user = _userSession.CurrentUser;
+            _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+            using var updateResp = await _http.PutAsJsonAsync($"/api/entries/{id}", entry);
+            return updateResp.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> DeletePwEntry(Guid id)
+        {
+            if (_userSession.CurrentUser == null)
+            {
+                return false;
+            }
+            var user = _userSession.CurrentUser;
+            _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+            using var deleteResp = await _http.DeleteAsync($"/api/entries/{id}");
+            return deleteResp.IsSuccessStatusCode;
+        }
     }
 }

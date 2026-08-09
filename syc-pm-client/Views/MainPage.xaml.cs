@@ -22,7 +22,7 @@ namespace syc_pm_client.Views
             Loaded += MainPage_Loaded;
         }
 
-        private void Vm_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Vm_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MainViewModel.SelectedAccount))
             {
@@ -40,12 +40,12 @@ namespace syc_pm_client.Views
             }
         }
 
-        private void AccountsList_ItemClick(object sender, ItemClickEventArgs e)
+        private void AccountsList_ItemClick(object? sender, ItemClickEventArgs e)
         {
             var vm = (MainViewModel)DataContext;
             if (vm.SelectedAccount == e.ClickedItem)
             {
-                // Unselect if the clicked item is already selected
+                // unselect if item is already selected
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     vm.SelectedAccount = null;
@@ -53,7 +53,7 @@ namespace syc_pm_client.Views
             }
         }
 
-        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private async void MainPage_Loaded(object? sender, RoutedEventArgs e)
         {
             Loaded -= MainPage_Loaded;
 

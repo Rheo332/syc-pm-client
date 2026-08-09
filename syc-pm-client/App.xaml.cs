@@ -41,18 +41,23 @@ namespace syc_pm_client
                     services.AddSingleton<INavigationService, NavigationService>();
                     services.AddSingleton<IAuthenticationService, AuthenticationService>();
                     services.AddSingleton<IPwEntryService, PwEntryService>();
+                    services.AddSingleton<IRequestService, RequestService>();
 
                     // Views
                     services.AddTransient<LoginPage>();
                     services.AddTransient<MainPage>();
                     services.AddTransient<AddEntryPage>();
                     services.AddTransient<AddUserPage>();
+                    services.AddTransient<RequestsPage>();
+                    services.AddTransient<MakeRequestPage>();
 
                     // ViewModels
                     services.AddTransient<LoginViewModel>();
                     services.AddTransient<MainViewModel>();
                     services.AddTransient<AddEntryViewModel>();
                     services.AddTransient<AddUserViewModel>();
+                    services.AddTransient<RequestsViewModel>();
+                    services.AddTransient<MakeRequestViewModel>();
 
                     // Window
                     services.AddSingleton<MainWindow>();

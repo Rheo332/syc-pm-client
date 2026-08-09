@@ -18,8 +18,6 @@ namespace syc_pm_client.Viewmodels
             _nav = nav;
             _userSession = userSession;
             _pwEntryService = pwEntryService;
-
-            // LoadDummyData();
         }
 
         [RelayCommand]
@@ -34,34 +32,32 @@ namespace syc_pm_client.Viewmodels
             _nav.Navigate<AddUserPage>();
         }
 
-        [ObservableProperty]
-        private ObservableCollection<Account> accounts = new();
-
-        [ObservableProperty]
-        private Account? selectedAccount;
-
-        /*private void LoadDummyData()
+        [RelayCommand]
+        private void OpenRequests()
         {
+            _nav.Navigate<RequestsPage>();
+        }
 
-            for (int i = 0; i < 10; i++)
-                Accounts.Add(new Account
-                {
-                    Name = $"Account {i + 1}",
-                    Username = $"user{i + 1}",
-                    Password = "Password",
-                    URL = $"https://www.example.com/user{i + 1}",
-                    Notes = $"Notes for Account {i + 1}"
-                });
-        }*/
+        [RelayCommand]
+        private void OpenMakeRequest()
+        {
+            _nav.Navigate<MakeRequestPage>();
+        }
+
+        [ObservableProperty]
+        public partial ObservableCollection<Account>? Accounts { get; set; } = new();
+
+        [ObservableProperty]
+        public partial Account? SelectedAccount { get; set; }
 
         public async Task<bool> LoadDataAsync()
         {
-            Accounts.Clear();
+            Accounts?.Clear();
             var pwEntries = await _pwEntryService.GetPwEntries();
 
             foreach (var entry in pwEntries)
             {
-                Accounts.Add(new Account
+                Accounts?.Add(new Account
                 {
                     Name = entry.Title,
                     Username = entry.Username,

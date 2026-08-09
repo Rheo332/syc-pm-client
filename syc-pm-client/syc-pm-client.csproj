@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
@@ -19,6 +19,8 @@
     <None Remove="Views\AddUserPage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
     <None Remove="Views\MainPage.xaml" />
+	<None Remove="Views\MakeRequestPage.xaml" />
+	<None Remove="Views\RequestsPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -82,6 +84,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ProjectDir).editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\MakeRequestPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+	<Page Update="Views\RequestsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\AddEntryPage.xaml">
