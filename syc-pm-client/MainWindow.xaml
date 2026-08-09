@@ -19,7 +19,21 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="TitleBar"/>
+        <Grid x:Name="TitleBar">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0" Spacing="10">
+                <Button x:Name="LogoutButton"
+                        BorderThickness="0"
+                        Width="32"
+                        Height="32"
+                        Padding="0"
+                        Background="Transparent"
+                        Click="LogoutButton_Click"
+                        Visibility="Collapsed"
+                        ToolTipService.ToolTip="Logout">
+                    <SymbolIcon Symbol="Back" />
+                </Button>
+            </StackPanel>
+        </Grid>
 
         <Frame
             x:Name="MainFrame"

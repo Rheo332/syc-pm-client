@@ -23,13 +23,6 @@ namespace syc_pm_client.Viewmodels
         }
 
         [RelayCommand]
-        private async Task Logout()
-        {
-            _userSession.Logout();
-            _nav.Navigate<LoginPage>();
-        }
-
-        [RelayCommand]
         private async Task AddEntry()
         {
             _nav.Navigate<AddEntryPage>();

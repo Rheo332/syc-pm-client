@@ -15,9 +15,16 @@ namespace syc_pm_client
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        public MainWindow(INavigationService nav)
+        private readonly INavigationService _nav;
+        private readonly IUserSessionService _userSession;
+
+        public MainWindow(INavigationService nav, IUserSessionService userSession)
         {
             InitializeComponent();
+            _nav = nav;
+            _userSession = userSession;
+
+            _userSession.OnSessionChanged += UserSession_OnSessionChanged;
 
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(TitleBar);
@@ -36,6 +43,26 @@ namespace syc_pm_client
 
             nav.Initialize(MainFrame);
             nav.Navigate<LoginPage>();
+            UpdateLogoutButtonVisibility();
+        }
+
+        private void UserSession_OnSessionChanged()
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                UpdateLogoutButtonVisibility();
+            });
+        }
+
+        private void UpdateLogoutButtonVisibility()
+        {
+            LogoutButton.Visibility = _userSession.CurrentUser != null ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            _userSession.Logout();
+            _nav.Navigate<LoginPage>();
         }
     }
 }

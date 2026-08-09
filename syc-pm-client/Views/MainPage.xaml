@@ -4,14 +4,19 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:syc_pm_client.Views"
+    xmlns:converters="using:syc_pm_client.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+    </Page.Resources>
+
     <Grid Margin="0,31,0,0" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition x:Name="Column0" Width="1*" />
+            <ColumnDefinition x:Name="Column1" Width="0" />
         </Grid.ColumnDefinitions>
 
         <Border 
@@ -36,47 +41,34 @@
                             Spacing="20"
                             Padding="20"
                             Margin="0">
-                    
-                    <Button x:Name="LogoutButton"
-                            Grid.Row="0"
-                            Width="50"
-                            Background="DarkGoldenrod"
-                            Command="{Binding LogoutCommand}">
-                        <SymbolIcon Symbol="Cancel" />
-                    </Button>
 
                     <TextBox x:Name="SearchBox"
                              Grid.Row="0"
                              HorizontalAlignment="Center"
                              PlaceholderText="Search..."
-                             Width="500"
+                             Width="200"
                              Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                              BorderThickness="2"
                              CornerRadius="6">
-                        <TextBox.Resources>
-                            <SolidColorBrush x:Key="TextControlBorderBrush" Color="#555555"/>
-                            <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="#B8860B"/>
-                            <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="#66B8860B"/>
-                        </TextBox.Resources>
                     </TextBox>
 
                     <Button x:Name="FilterButton"
                             Width="50"
-                            Background="DarkGoldenrod"
+                            Style="{StaticResource AccentButtonStyle}"
                             Command="{Binding FilterCommand}">
                         <SymbolIcon Symbol="Filter" />
                     </Button>
 
                     <Button x:Name="AddItemButton"
                             Width="50"
-                            Background="DarkGoldenrod"
+                            Style="{StaticResource AccentButtonStyle}"
                             Command="{Binding AddEntryCommand}">
                         <SymbolIcon Symbol="Add" />
                     </Button>
 
                     <Button x:Name="AddUserButton"
                             Width="50"
-                            Background="DarkGoldenrod"
+                            Style="{StaticResource AccentButtonStyle}"
                             Command="{Binding AddUserCommand}">
                         <SymbolIcon Symbol="Contact" />
                     </Button>
@@ -87,7 +79,9 @@
                         HorizontalAlignment="Stretch"
                         Margin="10"
                         ItemsSource="{Binding Accounts}"
-                        SelectedItem="{Binding SelectedAccount, Mode=TwoWay}">
+                        SelectedItem="{Binding SelectedAccount, Mode=TwoWay}"
+                        IsItemClickEnabled="True"
+                        ItemClick="AccountsList_ItemClick">
 
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
@@ -118,10 +112,11 @@
         </Border>
 
         <Border BorderBrush="Transparent"
-                BorderThickness="1,1,1,1"
-                Padding="10"
-                Margin="0"
-                Grid.Column="1">
+        BorderThickness="1,1,1,1"
+        Padding="10"
+        Margin="0"
+        Grid.Column="1"
+        Visibility="{Binding SelectedAccount, Converter={StaticResource NullToVisibilityConverter}}">
 
             <Grid x:Name="Accountdetails">
 
@@ -132,34 +127,34 @@
 
 
                 <StackPanel
-                    Orientation="Horizontal"
-                    Grid.Row="0"
-                    HorizontalAlignment="Center"
-                    Spacing="20">
+            Orientation="Horizontal"
+            Grid.Row="0"
+            HorizontalAlignment="Center"
+            Spacing="20">
 
                     <TextBlock 
-                        Text="Account Details"
-                        Grid.Row="0"
-                        FontSize="20"
-                        Margin="20"/>
+                Text="Account Details"
+                Grid.Row="0"
+                FontSize="20"
+                Margin="20"/>
 
                     <!--
-                    <Button x:Name="DeleteItemButton"
-                        Width="50"
-                        Margin="10"
-                        Background="HotPink"
-                        Command="{Binding DeleteItemCommand}">
-                        <SymbolIcon Symbol="Delete" />
-                    </Button>
+            <Button x:Name="DeleteItemButton"
+                Width="50"
+                Margin="10"
+                Background="HotPink"
+                Command="{Binding DeleteItemCommand}">
+                <SymbolIcon Symbol="Delete" />
+            </Button>
 
-                    <Button x:Name="EditItemButton"
-                        Width="50"
-                        Margin="10"
-                        Background="HotPink"
-                        Command="{Binding EditItemCommand}">
-                        <SymbolIcon Symbol="Edit" />
-                    </Button>
-                    -->
+            <Button x:Name="EditItemButton"
+                Width="50"
+                Margin="10"
+                Background="HotPink"
+                Command="{Binding EditItemCommand}">
+                <SymbolIcon Symbol="Edit" />
+            </Button>
+            -->
 
                 </StackPanel>
 
@@ -187,52 +182,53 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Title:"
-                           FontWeight="SemiBold"
-                           FontSize="16"/>
+                   FontWeight="SemiBold"
+                   FontSize="16"/>
                         <TextBlock Grid.Column="1"
-                           Text="{Binding SelectedAccount.Name}"
-                           FontSize="16"/>
+                   Text="{Binding SelectedAccount.Name}"
+                   FontSize="16"/>
 
                         <TextBlock Grid.Row="1"
-                           Text="Username:"
-                           FontWeight="SemiBold"
-                           FontSize="16"/>
+                   Text="Username:"
+                   FontWeight="SemiBold"
+                   FontSize="16"/>
                         <TextBlock Grid.Row="1"
-                           Grid.Column="1"
-                           Text="{Binding SelectedAccount.Username}"
-                           FontSize="16"/>
+                   Grid.Column="1"
+                   Text="{Binding SelectedAccount.Username}"
+                   FontSize="16"/>
 
                         <TextBlock Grid.Row="2"
-                           Text="Password:"
-                           FontWeight="SemiBold"
-                           FontSize="16"/>
+                   Text="Password:"
+                   FontWeight="SemiBold"
+                   FontSize="16"/>
                         <TextBlock Grid.Row="2"
-                           Grid.Column="1"
-                           Text="{Binding SelectedAccount.Password}"
-                           FontSize="16"/>
+                   Grid.Column="1"
+                   Text="{Binding SelectedAccount.Password}"
+                   FontSize="16"/>
 
                         <TextBlock Grid.Row="3"
-                           Text="URL:"
-                           FontWeight="SemiBold"
-                           FontSize="16"/>
+                   Text="URL:"
+                   FontWeight="SemiBold"
+                   FontSize="16"/>
                         <TextBlock Grid.Row="3"
-                           Grid.Column="1"
-                           Text="{Binding SelectedAccount.URL}"
-                           FontSize="16"/>
+                   Grid.Column="1"
+                   Text="{Binding SelectedAccount.URL}"
+                   FontSize="16"/>
 
                         <TextBlock Grid.Row="4"
-                           Text="Description:"
-                           FontWeight="SemiBold"
-                           FontSize="16"/>
+                   Text="Description:"
+                   FontWeight="SemiBold"
+                   FontSize="16"/>
                         <TextBlock Grid.Row="4"
-                           Grid.Column="1"
-                           Text="{Binding SelectedAccount.Notes}"
-                           FontSize="16"
-                           TextWrapping="Wrap"/>
+                   Grid.Column="1"
+                   Text="{Binding SelectedAccount.Notes}"
+                   FontSize="16"
+                   TextWrapping="Wrap"/>
                     </Grid>
                 </StackPanel>
             </Grid>
-            
+
         </Border>
+
     </Grid>
 </Page>
