@@ -10,278 +10,293 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+        <converters:NullToVisibilityConverter
+            x:Key="NullToVisibilityConverter" />
     </Page.Resources>
 
-    <Grid Margin="0,31,0,0" >
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="Column0" Width="*" />
-            <ColumnDefinition x:Name="Column1" Width="Auto" />
-        </Grid.ColumnDefinitions>
-
-        <Border 
-            BorderBrush="Transparent"
-            BorderThickness="1,1,1,1"
-            Padding="10"
-            Grid.Column="0">
-            <Grid 
-                x:Name="Accounts"
-                Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <StackPanel x:Name="AccountsBar"
-                            Grid.Row="0"
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Left"
-                            Spacing="20"
-                            Padding="5"
-                            Margin="0">
-
-                    <TextBox x:Name="SearchBox"
-                             Grid.Row="0"
-                             HorizontalAlignment="Center"
-                             PlaceholderText="Search..."
-                             Width="200"
-                             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                             BorderThickness="2"
-                             CornerRadius="6">
-                    </TextBox>
-
-                    <Button x:Name="AddItemButton"
-                            Width="50"
-                            Style="{StaticResource AccentButtonStyle}"
-                            Command="{Binding AddEntryCommand}">
+    <Grid Padding="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid
+            Grid.Row="0"
+            Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Spacing="3">
+                <TextBlock
+                    Text="Accounts"
+                    FontSize="28"
+                    FontWeight="SemiBold" />
+                <TextBlock
+                    Text="Manage your saved accounts"
+                    FontSize="14"
+                    Opacity="0.65" />
+            </StackPanel>
+            <StackPanel
+                Grid.Column="1"
+                Orientation="Horizontal"
+                Spacing="8">
+                <Button
+                    Command="{Binding AddEntryCommand}"
+                    ToolTipService.ToolTip="Add account">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
                         <SymbolIcon Symbol="Add" />
-                    </Button>
+                        <TextBlock Text="Add" />
+                    </StackPanel>
+                </Button>
+                <Button
+                    Command="{Binding AddUserCommand}"
+                    ToolTipService.ToolTip="Add user">
+                    <SymbolIcon Symbol="Contact" />
+                </Button>
+                <Button
+                    Command="{Binding OpenRequestsCommand}"
+                    ToolTipService.ToolTip="Requests">
+                    <SymbolIcon Symbol="List" />
+                </Button>
+                <Button
+                    Command="{Binding OpenMakeRequestCommand}"
+                    ToolTipService.ToolTip="Make request">
+                    <SymbolIcon Symbol="Message" />
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid
+            Grid.Row="1">
 
-                    <Button x:Name="AddUserButton"
-                            Width="50"
-                            Style="{StaticResource AccentButtonStyle}"
-                            Command="{Binding AddUserCommand}">
-                        <SymbolIcon Symbol="Contact" />
-                    </Button>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="25" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                    <Button x:Name="RequestsButton"
-                            Width="50"
-                            Style="{StaticResource AccentButtonStyle}"
-                            Command="{Binding OpenRequestsCommand}">
-                        <SymbolIcon Symbol="List" />
-                    </Button>
-
-                    <Button x:Name="MakeRequestButton"
-                            Width="50"
-                            Style="{StaticResource AccentButtonStyle}"
-                            Command="{Binding OpenMakeRequestCommand}">
-                        <SymbolIcon Symbol="Message" />
-                    </Button>
-                </StackPanel>
-
-                <ListView x:Name="AccountsList"
+            <Border
+                Grid.Column="0"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="12"
+                Padding="16">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBox
+                        x:Name="SearchBox"
+                        Grid.Row="0"
+                        PlaceholderText="Search accounts..."
+                        Margin="0,0,0,12" />
+                    <ListView
+                        x:Name="AccountsList"
                         Grid.Row="1"
                         ItemsSource="{Binding Accounts}"
                         SelectedItem="{Binding SelectedAccount, Mode=TwoWay}"
                         IsItemClickEnabled="True"
-                        ItemClick="AccountsList_ItemClick" >
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                            <Setter Property="Padding" Value="10,0,0,0" />
-                            <Setter Property="Margin" Value="5" />
-                            <Setter Property="CornerRadius" Value="8" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ListViewItem">
-                                        <Grid x:Name="LayoutRoot">
-                                            <Border x:Name="BackgroundBorder"
-                                                Background="{TemplateBinding Background}"
-                                                BorderBrush="{TemplateBinding BorderBrush}"
-                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                CornerRadius="{TemplateBinding CornerRadius}">
-                                                <ContentPresenter
-                                                    x:Name="ContentPresenter"
-                                                    Content="{TemplateBinding Content}"
-                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                    ContentTransitions="{TemplateBinding ContentTransitions}"
-                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                    Padding="{TemplateBinding Padding}" />
-                                            </Border>
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal" />
-                                                    <VisualState x:Name="PointerOver">
-                                                        <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames
-                                                                Storyboard.TargetName="BackgroundBorder"
-                                                                Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame
-                                                                    KeyTime="0"
-                                                                    Value="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Pressed">
-                                                        <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames
-                                                                Storyboard.TargetName="BackgroundBorder"
-                                                                Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame
-                                                                    KeyTime="0"
-                                                                    Value="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Disabled">
-                                                        <Storyboard>
-                                                            <DoubleAnimation
-                                                                Storyboard.TargetName="LayoutRoot"
-                                                                Storyboard.TargetProperty="Opacity"
-                                                                To="0.5"
-                                                                Duration="0" />
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                                <VisualStateGroup x:Name="SelectionStates">
-                                                    <VisualState x:Name="Unselected" />
-                                                    <VisualState x:Name="Selected">
-                                                        <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames
-                                                                Storyboard.TargetName="BackgroundBorder"
-                                                                Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame
-                                                                    KeyTime="0"
-                                                                    Value="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                    
-                                                    <VisualState x:Name="SelectedPressed">
-                                                        <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames
-                                                                Storyboard.TargetName="BackgroundBorder"
-                                                                Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame
-                                                                    KeyTime="0"
-                                                                    Value="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListView.ItemContainerStyle>
+                        ItemClick="AccountsList_ItemClick"
+                        SelectionMode="Single"
+                        BorderThickness="0">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter
+                                    Property="HorizontalContentAlignment"
+                                    Value="Stretch" />
 
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{Binding Name}" FontSize="18" Margin="0,5,0,0" />
-                                <TextBlock Grid.Row="1" Text="{Binding URL}" Margin="0,0,0,5" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-        </Border>
+                                <Setter
+                                    Property="VerticalContentAlignment"
+                                    Value="Stretch" />
 
-        <Border BorderBrush="Transparent"
-            BorderThickness="1,1,1,1"
-            Padding="10"
-            Margin="0"
-            Grid.Column="1"
-            Visibility="{Binding SelectedAccount, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Setter
+                                    Property="Padding"
+                                    Value="12" />
 
-            <Grid x:Name="Accountdetails">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+                                <Setter
+                                    Property="Margin"
+                                    Value="0,2" />
 
-                <TextBlock 
-                    Text="Account Details"
-                    Grid.Row="0"
-                    FontSize="20"
-                    Margin="20"
-                    HorizontalAlignment="Center"/>
-                <StackPanel
-                    Grid.Row="1"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Margin="10"
-                    Padding="20">
-                    <Grid RowSpacing="12" ColumnSpacing="20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                                <Setter
+                                    Property="CornerRadius"
+                                    Value="8" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition  Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                                    <StackPanel
+                                        Grid.Column="0"
+                                        Spacing="3">
 
-                        <TextBlock Text="Title:"
-                           FontWeight="SemiBold"
-                           FontSize="16"/>
-                        <TextBlock Grid.Column="1"
-                           Text="{Binding SelectedAccount.Name}"
-                           FontSize="16"/>
+                                        <TextBlock
+                                            Text="{Binding Name}"
+                                            FontSize="16"
+                                            FontWeight="SemiBold"
+                                            TextTrimming="CharacterEllipsis" />
 
-                        <TextBlock Grid.Row="1"
-                           Text="Username:"
-                           FontWeight="SemiBold"
-                           FontSize="16"/>
-                        <TextBlock Grid.Row="1"
-                           Grid.Column="1"
-                           Text="{Binding SelectedAccount.Username}"
-                           FontSize="16"/>
+                                        <TextBlock
+                                            Text="{Binding URL}"
+                                            FontSize="13"
+                                            Opacity="0.65"
+                                            TextTrimming="CharacterEllipsis" />
 
-                        <TextBlock Grid.Row="2"
-                           Text="Password:"
-                           FontWeight="SemiBold"
-                           FontSize="16"/>
-                        <TextBlock Grid.Row="2"
-                           Grid.Column="1"
-                           Text="{Binding SelectedAccount.Password}"
-                           FontSize="16"/>
+                                        <TextBlock
+                                            Text="{Binding Username}"
+                                            FontSize="12"
+                                            Opacity="0.5"
+                                            TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
+                                    <FontIcon
+                                        Grid.Column="1"
+                                        Glyph="&#xE76C;"
+                                        FontSize="12"
+                                        VerticalAlignment="Center"
+                                        Opacity="0.45" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
 
-                        <TextBlock Grid.Row="3"
-                           Text="URL:"
-                           FontWeight="SemiBold"
-                           FontSize="16"/>
-                        <TextBlock Grid.Row="3"
-                           Grid.Column="1"
-                           Text="{Binding SelectedAccount.URL}"
-                           FontSize="16"/>
+            <Grid Grid.Column="1" />
 
-                        <TextBlock Grid.Row="4"
-                           Text="Description:"
-                           FontWeight="SemiBold"
-                           FontSize="16"/>
-                        <TextBlock Grid.Row="4"
-                           Grid.Column="1"
-                           Text="{Binding SelectedAccount.Notes}"
-                           FontSize="16"
-                           TextWrapping="Wrap"/>
-                    </Grid>
-                </StackPanel>
-            </Grid>
-        </Border>
+            <Border
+                Grid.Column="2"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="12"
+                Padding="32"
+                Visibility="{Binding SelectedAccount, Converter={StaticResource NullToVisibilityConverter}}">
+
+                <ScrollViewer>
+
+                    <StackPanel Spacing="24">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Spacing="4">
+                                <Grid Padding="0,0,15,0">
+                                    <TextBlock
+                                        Text="{Binding SelectedAccount.Name}"
+                                        FontSize="26"
+                                        FontWeight="SemiBold" />
+                                    <Button
+                                        HorizontalAlignment="Right"
+                                        Grid.Column="1"
+                                        ToolTipService.ToolTip="Edit">
+                                        <Button.Flyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem Text="Edit" Command="{Binding EditEntryCommand}"/>
+                                                <MenuFlyoutItem Text="Delete" Command="{Binding DeleteEntryCommand}"/>
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+
+                                        <SymbolIcon Symbol="More" />
+                                    </Button>
+                                </Grid>
+                                <TextBlock
+                                    Text="{Binding SelectedAccount.URL}"
+                                    FontSize="14"
+                                    Opacity="0.6" />
+                            </StackPanel>
+
+                        </Grid>
+
+                        <StackPanel Spacing="18">
+
+                            <StackPanel
+                                Spacing="5">
+
+                                <TextBlock
+                                    Text="Username"
+                                    FontSize="13"
+                                    FontWeight="SemiBold"
+                                    Opacity="0.65" />
+
+                                <Border
+                                    Background="{ThemeResource ControlFillColorDefaultBrush}"
+                                    CornerRadius="6"
+                                    Padding="12">
+
+                                    <TextBlock
+                                        Text="{Binding SelectedAccount.Username}"
+                                        FontSize="15"
+                                        TextTrimming="CharacterEllipsis" />
+
+                                </Border>
+
+                            </StackPanel>
+
+                            <StackPanel Spacing="5">
+
+                                <TextBlock
+                                    Text="Password"
+                                    FontSize="13"
+                                    FontWeight="SemiBold"
+                                    Opacity="0.65" />
+
+                                <Border
+                                    Background="{ThemeResource ControlFillColorDefaultBrush}"
+                                    CornerRadius="6"
+                                    Padding="12">
+
+                                    <TextBlock
+                                        Text="{Binding SelectedAccount.Password}"
+                                        FontSize="15"
+                                        FontFamily="Consolas" />
+                                </Border>
+                            </StackPanel>
+
+                            <StackPanel Spacing="5">
+                                <TextBlock
+                                    Text="Website"
+                                    FontSize="13"
+                                    FontWeight="SemiBold"
+                                    Opacity="0.65" />
+
+                                <Border
+                                    Background="{ThemeResource ControlFillColorDefaultBrush}"
+                                    CornerRadius="6"
+                                    Padding="12">
+
+                                    <TextBlock
+                                        Text="{Binding SelectedAccount.URL}"
+                                        FontSize="15"
+                                        TextTrimming="CharacterEllipsis" />
+                                </Border>
+                            </StackPanel>
+
+                            <StackPanel Spacing="5">
+                                <TextBlock
+                                    Text="Notes"
+                                    FontSize="13"
+                                    FontWeight="SemiBold"
+                                    Opacity="0.65" />
+                                <Border
+                                    Background="{ThemeResource ControlFillColorDefaultBrush}"
+                                    CornerRadius="6"
+                                    Padding="12">
+                                    <TextBlock
+                                        Text="{Binding SelectedAccount.Notes}"
+                                        FontSize="15"
+                                        TextWrapping="Wrap"
+                                        LineHeight="22" />
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
     </Grid>
 </Page>

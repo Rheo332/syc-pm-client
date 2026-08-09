@@ -1,7 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using syc_pm_client.Viewmodels;
-using System.ComponentModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -17,27 +16,8 @@ namespace syc_pm_client.Views
         {
             InitializeComponent();
             DataContext = vm;
-            vm.PropertyChanged += Vm_PropertyChanged;
 
             Loaded += MainPage_Loaded;
-        }
-
-        private void Vm_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(MainViewModel.SelectedAccount))
-            {
-                var vm = (MainViewModel)DataContext;
-                if (vm.SelectedAccount != null)
-                {
-                    Column0.Width = new GridLength(2, GridUnitType.Star);
-                    Column1.Width = new GridLength(1, GridUnitType.Star);
-                }
-                else
-                {
-                    Column0.Width = new GridLength(1, GridUnitType.Star);
-                    Column1.Width = new GridLength(0);
-                }
-            }
         }
 
         private void AccountsList_ItemClick(object? sender, ItemClickEventArgs e)

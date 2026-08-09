@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using syc_pm_client.Services.Interfaces;
 using syc_pm_client.Views;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -24,6 +25,24 @@ namespace syc_pm_client.Viewmodels
         private async Task AddEntry()
         {
             _nav.Navigate<AddEntryPage>();
+        }
+
+        [RelayCommand]
+        private async Task EditEntry()
+        {
+            if (SelectedAccount != null)
+            {
+                _nav.Navigate<MakeRequestPage>();
+            }
+        }
+
+        [RelayCommand]
+        private async Task DeleteEntry()
+        {
+            if (SelectedAccount != null)
+            {
+                _nav.Navigate<MakeRequestPage>();
+            }
         }
 
         [RelayCommand]
@@ -59,6 +78,7 @@ namespace syc_pm_client.Viewmodels
             {
                 Accounts?.Add(new Account
                 {
+                    Id = entry.Id,
                     Name = entry.Title,
                     Username = entry.Username,
                     Password = entry.DecryptedPassword,
@@ -73,6 +93,7 @@ namespace syc_pm_client.Viewmodels
 
     public class Account
     {
+        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
