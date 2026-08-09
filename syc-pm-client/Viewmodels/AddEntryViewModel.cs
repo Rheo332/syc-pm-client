@@ -98,5 +98,11 @@ namespace syc_pm_client.Viewmodels
                 ErrorMessage = $"Failed to add password entry: {ex.Message}";
             }
         }
+
+        [RelayCommand]
+        private async Task Cancel()
+        {
+            _nav.Navigate<MainPage>();
+        }
     }
 }

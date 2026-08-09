@@ -73,6 +73,13 @@
                             Command="{Binding AddEntryCommand}">
                         <SymbolIcon Symbol="Add" />
                     </Button>
+
+                    <Button x:Name="AddUserButton"
+                            Width="50"
+                            Background="DarkGoldenrod"
+                            Command="{Binding AddUserCommand}">
+                        <SymbolIcon Symbol="Contact" />
+                    </Button>
                 </StackPanel>
 
                 <ListView x:Name="AccountsList"

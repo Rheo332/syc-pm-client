@@ -46,11 +46,13 @@ namespace syc_pm_client
                     services.AddTransient<LoginPage>();
                     services.AddTransient<MainPage>();
                     services.AddTransient<AddEntryPage>();
+                    services.AddTransient<AddUserPage>();
 
                     // ViewModels
                     services.AddTransient<LoginViewModel>();
                     services.AddTransient<MainViewModel>();
                     services.AddTransient<AddEntryViewModel>();
+                    services.AddTransient<AddUserViewModel>();
 
                     // Window
                     services.AddSingleton<MainWindow>();

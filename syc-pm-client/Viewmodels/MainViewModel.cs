@@ -35,6 +35,12 @@ namespace syc_pm_client.Viewmodels
             _nav.Navigate<AddEntryPage>();
         }
 
+        [RelayCommand]
+        private async Task AddUser()
+        {
+            _nav.Navigate<AddUserPage>();
+        }
+
         [ObservableProperty]
         private ObservableCollection<Account> accounts = new();
 
