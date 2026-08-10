@@ -17,6 +17,7 @@
   <ItemGroup>
     <None Remove="Views\AddEntryPage.xaml" />
     <None Remove="Views\AddUserPage.xaml" />
+    <None Remove="Views\GiveAccessPage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
     <None Remove="Views\MainPage.xaml" />
 	<None Remove="Views\MakeRequestPage.xaml" />
@@ -84,6 +85,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ProjectDir).editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\GiveAccessPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\MakeRequestPage.xaml">

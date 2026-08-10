@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using syc_pm_client.Services.Interfaces;
 using syc_pm_client.Views;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -27,6 +28,34 @@ namespace syc_pm_client.Viewmodels
         }
 
         [RelayCommand]
+        private async Task EditEntry()
+        {
+            if (SelectedAccount != null)
+            {
+                _nav.Navigate<MakeRequestPage>(page =>
+                {
+                    var vm = (MakeRequestViewModel)page.DataContext;
+                    vm.RequestType = "Edit";
+                    vm.TargetEntryId = SelectedAccount.Id.ToString();
+                });
+            }
+        }
+
+        [RelayCommand]
+        private async Task DeleteEntry()
+        {
+            if (SelectedAccount != null)
+            {
+                _nav.Navigate<MakeRequestPage>(page =>
+                {
+                    var vm = (MakeRequestViewModel)page.DataContext;
+                    vm.RequestType = "Remove";
+                    vm.TargetEntryId = SelectedAccount.Id.ToString();
+                });
+            }
+        }
+
+        [RelayCommand]
         private async Task AddUser()
         {
             _nav.Navigate<AddUserPage>();
@@ -44,6 +73,12 @@ namespace syc_pm_client.Viewmodels
             _nav.Navigate<MakeRequestPage>();
         }
 
+        [RelayCommand]
+        private void OpenGiveAccess()
+        {
+            _nav.Navigate<GiveAccessPage>();
+        }
+
         [ObservableProperty]
         public partial ObservableCollection<Account>? Accounts { get; set; } = new();
 
@@ -59,6 +94,7 @@ namespace syc_pm_client.Viewmodels
             {
                 Accounts?.Add(new Account
                 {
+                    Id = entry.Id,
                     Name = entry.Title,
                     Username = entry.Username,
                     Password = entry.DecryptedPassword,
@@ -73,6 +109,7 @@ namespace syc_pm_client.Viewmodels
 
     public class Account
     {
+        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;

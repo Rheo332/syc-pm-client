@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace syc_pm_client.Models
 {
     public class PwEntry
     {
+        public Guid Id { get; set; }
         public string Title { get; set; } = null!;
         public string Username { get; set; } = null!;
         public string Url { get; set; } = null!;

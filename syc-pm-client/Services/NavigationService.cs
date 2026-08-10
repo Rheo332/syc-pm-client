@@ -20,9 +20,13 @@ namespace syc_pm_client.Services
             _frame = frame;
         }
 
-        public void Navigate<T>() where T : Page
+        public void Navigate<T>(Action<T>? configure = null) where T : Page
         {
             var page = _provider.GetRequiredService<T>();
+            if (configure != null)
+            {
+                configure(page);
+            }
             _frame!.Content = page;
         }
     }
