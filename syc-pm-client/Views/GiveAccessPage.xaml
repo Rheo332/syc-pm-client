@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="syc_pm_client.Views.GiveAccessPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:syc_pm_client.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:syc_pm_client.Viewmodels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:GiveAccessViewModel}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+            <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="12" />
+        </Style>
+
+        <Style x:Key="AccessListItemStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="6,3" />
+        </Style>
+    </Page.Resources>
+
+    <Grid Padding="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Spacing="6"
+                    Margin="0,0,0,28">
+            <TextBlock
+                Text="Manage Access"
+                FontSize="32"
+                FontWeight="SemiBold" />
+        </StackPanel>
+
+        <Border
+            Grid.Row="1"
+            Style="{StaticResource CardStyle}"
+            Padding="20"
+            Margin="0,0,0,28"
+            MaxWidth="700"
+            HorizontalAlignment="Left">
+
+            <Grid ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="260" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Spacing="4">
+                    <TextBlock
+                        Text="Select User"
+                        FontSize="16"
+                        FontWeight="SemiBold" />
+
+                </StackPanel>
+
+                <ComboBox
+                    Grid.Column="1"
+                    ItemsSource="{Binding Users}"
+                    SelectedItem="{Binding SelectedUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    DisplayMemberPath="Username"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    MinHeight="40" />
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2"
+              ColumnSpacing="24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border
+                Grid.Column="0"
+                Style="{StaticResource CardStyle}"
+                Padding="20">
+                <Grid RowSpacing="14">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Spacing="3">
+                            <TextBlock
+                                Text="No Access"
+                                FontSize="18"
+                                FontWeight="SemiBold" />
+
+                            <TextBlock
+                                Text="Entries this user cannot access"
+                                FontSize="12"
+                                Opacity="0.6" />
+                        </StackPanel>
+
+                        <Border
+                            Grid.Column="1"
+                            Background="{ThemeResource SubtleFillColorSecondaryBrush}"
+                            CornerRadius="10"
+                            Padding="9,5"
+                            VerticalAlignment="Center">
+                            <TextBlock
+                                Text="DRAG"
+                                FontSize="10"
+                                FontWeight="SemiBold"
+                                Opacity="0.65" />
+                        </Border>
+                    </Grid>
+
+                    <ListView
+                        Grid.Row="1"
+                        x:Name="AvailableListView"
+                        ItemsSource="{Binding AvailableEntries}"
+                        CanDragItems="True"
+                        CanReorderItems="True"
+                        AllowDrop="True"
+                        SelectionMode="Single"
+                        ItemContainerStyle="{StaticResource AccessListItemStyle}"
+                        DragItemsStarting="AvailableListView_DragItemsStarting"
+                        DragOver="ListView_DragOver"
+                        Drop="AvailableListView_Drop">
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                    Background="{ThemeResource SubtleFillColorTransparentBrush}"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="14,12">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border
+                                            Width="36"
+                                            Height="36"
+                                            Background="{ThemeResource SubtleFillColorSecondaryBrush}"
+                                            CornerRadius="8"
+                                            VerticalAlignment="Center">
+                                            <SymbolIcon Symbol="Remove" />
+                                        </Border>
+
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            Margin="12,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Spacing="2">
+                                            <TextBlock
+                                                Text="{Binding Title}"
+                                                FontSize="14"
+                                                FontWeight="SemiBold"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <TextBlock
+                                                Text="Drag to grant access"
+                                                FontSize="11"
+                                                Opacity="0.5" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+
+            <Border
+                Grid.Column="1"
+                Style="{StaticResource CardStyle}"
+                Padding="20">
+                <Grid RowSpacing="14">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Spacing="3">
+                            <TextBlock
+                                Text="Has Access"
+                                FontSize="18"
+                                FontWeight="SemiBold" />
+                            <TextBlock
+                                Text="Entries this user can access"
+                                FontSize="12"
+                                Opacity="0.6" />
+                        </StackPanel>
+
+                        <Border
+                            Grid.Column="1"
+                            Background="{ThemeResource SubtleFillColorSecondaryBrush}"
+                            CornerRadius="10"
+                            Padding="9,5"
+                            VerticalAlignment="Center">
+                            <TextBlock
+                                Text="DRAG"
+                                FontSize="10"
+                                FontWeight="SemiBold"
+                                Opacity="0.65" />
+                        </Border>
+                    </Grid>
+
+                    <ListView
+                        Grid.Row="1"
+                        x:Name="GrantedListView"
+                        ItemsSource="{Binding GrantedEntries}"
+                        CanDragItems="True"
+                        CanReorderItems="True"
+                        AllowDrop="True"
+                        SelectionMode="Single"
+                        ItemContainerStyle="{StaticResource AccessListItemStyle}"
+                        DragItemsStarting="GrantedListView_DragItemsStarting"
+                        DragOver="ListView_DragOver"
+                        Drop="GrantedListView_Drop">
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                    Background="{ThemeResource SubtleFillColorTransparentBrush}"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="14,12">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border
+                                            Width="36"
+                                            Height="36"
+                                            Background="{ThemeResource SubtleFillColorSecondaryBrush}"
+                                            CornerRadius="8"
+                                            VerticalAlignment="Center">
+                                            <SymbolIcon Symbol="Accept" />
+                                        </Border>
+
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            Margin="12,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Spacing="2">
+                                            <TextBlock
+                                                Text="{Binding Title}"
+                                                FontSize="14"
+                                                FontWeight="SemiBold"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <TextBlock
+                                                Text="Drag to revoke access"
+                                                FontSize="11"
+                                                Opacity="0.5" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Border
+            Grid.Row="3"
+            Margin="0,20,0,0"
+            Padding="14,10"
+            Background="{ThemeResource SubtleFillColorSecondaryBrush}"
+            CornerRadius="8"
+            Visibility="Visible">
+            <TextBlock
+                HorizontalAlignment="Center"
+                Text="{Binding Message}"
+                FontSize="15"
+                TextWrapping="Wrap"
+                Opacity="0.8" />
+        </Border>
+    </Grid>
+</Page>

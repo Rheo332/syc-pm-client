@@ -50,6 +50,7 @@ namespace syc_pm_client
                     services.AddTransient<AddUserPage>();
                     services.AddTransient<RequestsPage>();
                     services.AddTransient<MakeRequestPage>();
+                    services.AddTransient<GiveAccessPage>();
 
                     // ViewModels
                     services.AddTransient<LoginViewModel>();
@@ -58,6 +59,7 @@ namespace syc_pm_client
                     services.AddTransient<AddUserViewModel>();
                     services.AddTransient<RequestsViewModel>();
                     services.AddTransient<MakeRequestViewModel>();
+                    services.AddTransient<GiveAccessViewModel>();
 
                     // Window
                     services.AddSingleton<MainWindow>();

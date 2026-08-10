@@ -30,7 +30,7 @@
                         Click="LogoutButton_Click"
                         Visibility="Collapsed"
                         ToolTipService.ToolTip="Logout">
-                    <SymbolIcon Symbol="Back" />
+                    <FontIcon Glyph="&#xE76B;" />
                 </Button>
             </StackPanel>
         </Grid>

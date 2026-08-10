@@ -73,6 +73,12 @@ namespace syc_pm_client.Viewmodels
             _nav.Navigate<MakeRequestPage>();
         }
 
+        [RelayCommand]
+        private void OpenGiveAccess()
+        {
+            _nav.Navigate<GiveAccessPage>();
+        }
+
         [ObservableProperty]
         public partial ObservableCollection<Account>? Accounts { get; set; } = new();
 

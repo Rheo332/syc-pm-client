@@ -53,23 +53,41 @@
                 <Button
                     Command="{Binding AddUserCommand}"
                     ToolTipService.ToolTip="Add user">
-                    <SymbolIcon Symbol="Contact" />
+                    <SymbolIcon Symbol="AddFriend" />
                 </Button>
                 <Button
                     Command="{Binding OpenRequestsCommand}"
                     ToolTipService.ToolTip="Requests">
-                    <SymbolIcon Symbol="List" />
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <SymbolIcon Symbol="List" />
+                        <TextBlock Text="Requests" />
+                    </StackPanel>
                 </Button>
                 <Button
                     Command="{Binding OpenMakeRequestCommand}"
                     ToolTipService.ToolTip="Make request">
-                    <SymbolIcon Symbol="Message" />
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <SymbolIcon Symbol="Message" />
+                        <TextBlock Text="Make Request" />
+                    </StackPanel>
+                </Button>
+                <Button
+                    Command="{Binding OpenGiveAccessCommand}"
+                    ToolTipService.ToolTip="Give access">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <SymbolIcon Symbol="ContactPresence" />
+                        <TextBlock Text="Give Access" />
+                    </StackPanel>
                 </Button>
             </StackPanel>
         </Grid>
-        <Grid
-            Grid.Row="1">
-
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="25" />
