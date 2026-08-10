@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Padding="20" Spacing="20">
-            <Button Content="Back" Command="{Binding BackCommand}" Style="{StaticResource AccentButtonStyle}" />
+            <!--<Button Content="Back" Command="{Binding BackCommand}" Style="{StaticResource AccentButtonStyle}" />-->
             <TextBlock Text="Pending Requests" FontSize="24" VerticalAlignment="Center" />
             <ProgressRing IsActive="{Binding IsBusy}" Width="24" Height="24" VerticalAlignment="Center" />
         </StackPanel>

@@ -5,14 +5,8 @@ using syc_pm_client.Services.Interfaces;
 using syc_pm_client.Views;
 using WinRT.Interop;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace syc_pm_client
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainWindow : Window
     {
         private readonly INavigationService _nav;
@@ -61,8 +55,15 @@ namespace syc_pm_client
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            _userSession.Logout();
-            _nav.Navigate<LoginPage>();
+            if (MainFrame.Content is MainPage)
+            {
+                _userSession.Logout();
+                _nav.Navigate<LoginPage>();
+            }
+            else
+            {
+                _nav.Navigate<MainPage>();
+            }
         }
     }
 }

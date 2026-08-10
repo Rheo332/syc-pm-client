@@ -154,7 +154,7 @@ namespace syc_pm_client.Viewmodels
         [RelayCommand]
         private async Task Cancel()
         {
-            _nav.Navigate<MainPage>();
+            _nav.Navigate<LoginPage>();
         }
     }
 }

@@ -48,7 +48,9 @@ namespace syc_pm_client.Viewmodels
 
         private bool CanLogin()
         {
-            return !IsBusy && !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
+            return !IsBusy
+                && !string.IsNullOrWhiteSpace(Username)
+                && !string.IsNullOrWhiteSpace(Password);
         }
 
         [RelayCommand(CanExecute = nameof(CanLogin))]
@@ -79,6 +81,12 @@ namespace syc_pm_client.Viewmodels
             {
                 IsBusy = false;
             }
+        }
+
+        [RelayCommand]
+        private async Task Register()
+        {
+            _nav.Navigate<AddUserPage>();
         }
     }
 

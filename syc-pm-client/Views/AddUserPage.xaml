@@ -18,12 +18,10 @@
     <Grid>
         <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="360" Padding="32" CornerRadius="8" Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1">
             <StackPanel Spacing="16">
-                <TextBlock Text="Add New User" />
+                <TextBlock FontSize="28" FontWeight="SemiBold" Text="Register" HorizontalAlignment="Center" Margin="0,0,0,8" />
 
-                <TextBox Header="Username" PlaceholderText="Enter Username" Text="{Binding Username, Mode=TwoWay}" />
-                <!-- Assuming we use simple TextBox for password like in AddEntry, or PasswordBox -->
-                <!-- <PasswordBox Header="Password" PlaceholderText="Enter Password" Password="{Binding Password, Mode=TwoWay}" /> -->
-                <TextBox Header="Password" PlaceholderText="Enter Password" Text="{Binding Password, Mode=TwoWay}" />
+                <TextBox Header="Username" PlaceholderText="Enter Username" Text="{Binding Username, Mode=TwoWay}" KeyDown="Register_KeyDown" />
+                <PasswordBox Header="Password" PlaceholderText="Enter Password" PasswordChar="●" x:Name="PasswordBox" KeyDown="Register_KeyDown" />
 
                 <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}" TextWrapping="Wrap" />
 
