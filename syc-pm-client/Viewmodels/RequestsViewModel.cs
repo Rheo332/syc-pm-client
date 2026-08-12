@@ -81,8 +81,27 @@ namespace syc_pm_client.Viewmodels
             }
             catch { }
 
+            string rawPwd = "[Encrypted]";
+            if (!string.IsNullOrEmpty(payload?.EncryptedPassword) && _userSession.CurrentUser != null && !string.IsNullOrEmpty(_userSession.CurrentUser.PrivateKey))
+            {
+                try
+                {
+                    var privBytes = Convert.FromBase64String(_userSession.CurrentUser.PrivateKey);
+                    using var rsa = System.Security.Cryptography.RSA.Create();
+                    rsa.ImportPkcs8PrivateKey(privBytes, out _);
+                    var pwdBytes = Convert.FromBase64String(payload.EncryptedPassword);
+                    var decBytes = rsa.Decrypt(pwdBytes, System.Security.Cryptography.RSAEncryptionPadding.OaepSHA256);
+                    rawPwd = System.Text.Encoding.UTF8.GetString(decBytes);
+                }
+                catch { rawPwd = "[Decryption Failed]"; }
+            }
             string contentText = payload != null
-                ? $"Type: {request.Type}\nTitle: {payload.Title}\nURL: {payload.Url}\nUser: {payload.Username}\nDesc: {payload.Description}"
+                ? $"Type: {request.Type}\n" +
+                $"Title: {payload.Title}\n" +
+                $"URL: {payload.Url}\n" +
+                $"User: {payload.Username}\n" +
+                $"Password: {rawPwd}\n" +
+                $"Desc: {payload.Description}"
                 : "Invalid payload";
 
             var dialog = new ContentDialog

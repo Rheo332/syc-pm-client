@@ -21,25 +21,31 @@
         </Grid.RowDefinitions>
         <Grid
             Grid.Row="0"
-            Margin="0,0,0,20">
+            Margin="0,0,0,15">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel Spacing="3">
+            <StackPanel Spacing="3" Orientation="Horizontal">
                 <TextBlock
                     Text="Accounts"
                     FontSize="28"
                     FontWeight="SemiBold" />
-                <TextBlock
-                    Text="Manage your saved accounts"
-                    FontSize="14"
-                    Opacity="0.65" />
+                <Button
+                    Click="Refresh_Click"
+                    ToolTipService.ToolTip="Refresh"
+                    Margin="12,4,0,0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Padding="8">
+                    <SymbolIcon Symbol="Refresh" />
+                </Button>
             </StackPanel>
             <StackPanel
                 Grid.Column="1"
                 Orientation="Horizontal"
                 Spacing="8">
+                <!--
                 <Button
                     Command="{Binding AddEntryCommand}"
                     ToolTipService.ToolTip="Add new entry">
@@ -48,6 +54,17 @@
                         Spacing="8">
                         <SymbolIcon Symbol="Add" />
                         <TextBlock Text="Add" />
+                    </StackPanel>
+                </Button>
+                -->
+                <Button
+                    Command="{Binding OpenGiveAccessCommand}"
+                    ToolTipService.ToolTip="Manage access">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <SymbolIcon Symbol="ContactPresence" />
+                        <TextBlock Text="Manage Access" />
                     </StackPanel>
                 </Button>
                 <Button
@@ -70,16 +87,7 @@
                         <TextBlock Text="Make Request" />
                     </StackPanel>
                 </Button>
-                <Button
-                    Command="{Binding OpenGiveAccessCommand}"
-                    ToolTipService.ToolTip="Manage access">
-                    <StackPanel
-                        Orientation="Horizontal"
-                        Spacing="8">
-                        <SymbolIcon Symbol="ContactPresence" />
-                        <TextBlock Text="Manage Access" />
-                    </StackPanel>
-                </Button>
+                
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
@@ -217,10 +225,6 @@
                                         <SymbolIcon Symbol="More" />
                                     </Button>
                                 </Grid>
-                                <TextBlock
-                                    Text="{Binding SelectedAccount.URL}"
-                                    FontSize="14"
-                                    Opacity="0.6" />
                             </StackPanel>
 
                         </Grid>
@@ -258,16 +262,28 @@
                                     FontWeight="SemiBold"
                                     Opacity="0.65" />
 
-                                <Border
-                                    Background="{ThemeResource ControlFillColorDefaultBrush}"
-                                    CornerRadius="6"
-                                    Padding="12">
-
-                                    <TextBlock
-                                        Text="{Binding SelectedAccount.Password}"
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <PasswordBox
+                                        x:Name="PasswordBoxControl"
+                                        Grid.Column="0"
+                                        Password="{Binding SelectedAccount.Password, Mode=OneWay}"
                                         FontSize="15"
-                                        FontFamily="Consolas" />
-                                </Border>
+                                        FontFamily="Consolas"
+                                        IsEnabled="False" />
+
+                                    <Button
+                                        Grid.Column="1"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Stretch"
+                                        Command="{Binding CopyPasswordCommand}">
+                                        <FontIcon Glyph="&#xE8C8;" />
+                                    </Button>
+                                </Grid>
                             </StackPanel>
 
                             <StackPanel Spacing="5">

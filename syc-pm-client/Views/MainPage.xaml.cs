@@ -39,5 +39,10 @@ namespace syc_pm_client.Views
 
             await ((MainViewModel)DataContext).LoadDataAsync();
         }
+
+        private async void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            await ((MainViewModel)DataContext).LoadDataAsync();
+        }
     }
 }

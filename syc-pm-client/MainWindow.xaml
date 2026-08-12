@@ -23,13 +23,14 @@
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0" Spacing="10">
                 <Button x:Name="LogoutButton"
                         BorderThickness="0"
-                        Width="32"
+                        Width="38"
                         Height="32"
-                        Padding="0"
+                        Padding="8"
                         Background="Transparent"
                         Click="LogoutButton_Click"
                         Visibility="Collapsed"
-                        ToolTipService.ToolTip="Back">
+                        ToolTipService.ToolTip="Back"
+                        Margin="-10,0,0,0">
                     <FontIcon Glyph="&#xE72B;" />
                 </Button>
             </StackPanel>

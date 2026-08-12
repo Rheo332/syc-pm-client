@@ -37,6 +37,11 @@ namespace syc_pm_client.Viewmodels
                     var vm = (MakeRequestViewModel)page.DataContext;
                     vm.RequestType = "Edit";
                     vm.TargetEntryId = SelectedAccount.Id.ToString();
+                    vm.Title = SelectedAccount.Name;
+                    vm.Url = SelectedAccount.URL;
+                    vm.Username = SelectedAccount.Username;
+                    vm.Password = SelectedAccount.Password;
+                    vm.Description = SelectedAccount.Notes;
                 });
             }
         }
@@ -77,6 +82,17 @@ namespace syc_pm_client.Viewmodels
         private void OpenGiveAccess()
         {
             _nav.Navigate<GiveAccessPage>();
+        }
+
+        [RelayCommand]
+        private void CopyPassword()
+        {
+            if (SelectedAccount != null && !string.IsNullOrEmpty(SelectedAccount.Password))
+            {
+                var package = new Windows.ApplicationModel.DataTransfer.DataPackage();
+                package.SetText(SelectedAccount.Password);
+                Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(package);
+            }
         }
 
         [ObservableProperty]

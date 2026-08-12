@@ -22,9 +22,11 @@
                 <PasswordBox Header="Password" PlaceholderText="Enter your password" PasswordChar="●" x:Name="PasswordBox" KeyDown="Login_KeyDown" />
 
                 <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}" TextWrapping="Wrap" />
-
-                <Button Content="Login" Command="{Binding LoginCommand}" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" Margin="0,12,0,0" />
-                <Button Content="Register" Command="{Binding RegisterCommand}" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" Margin="0,12,0,0" />
+                
+                <StackPanel Spacing="0">
+                    <Button Content="Login" Command="{Binding LoginCommand}" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" Margin="0,12,0,0" />
+                    <Button Content="Register" Command="{Binding RegisterCommand}" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" Margin="0,12,0,0" />
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>

@@ -27,7 +27,11 @@
                 <DataTemplate>
                     <Border Padding="10" Margin="0,5" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
                         <StackPanel>
-                            <TextBlock Text="{Binding Type}" FontWeight="Bold" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Type}" FontWeight="Bold" />
+                                <TextBlock Text=" > "  />
+                                <TextBlock Text="{Binding PayloadTitle}" FontWeight="Bold" />
+                            </StackPanel>
                             <TextBlock Text="{Binding Username}" />
                             <TextBlock Text="{Binding CreatedAt}" Foreground="Gray" FontSize="12" />
                         </StackPanel>
