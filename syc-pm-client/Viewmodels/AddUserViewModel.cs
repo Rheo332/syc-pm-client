@@ -33,6 +33,10 @@ namespace syc_pm_client.Viewmodels
         [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
         public partial string? Password { get; set; }
 
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
+        public partial string? RepeatPassword { get; set; }
+
         private bool _isBusy;
         public bool IsBusy
         {
@@ -55,7 +59,8 @@ namespace syc_pm_client.Viewmodels
         {
             return !IsBusy
                 && !string.IsNullOrWhiteSpace(Username)
-                && !string.IsNullOrWhiteSpace(Password);
+                && !string.IsNullOrWhiteSpace(Password)
+                && !string.IsNullOrWhiteSpace(RepeatPassword);
         }
 
         [RelayCommand(CanExecute = nameof(CanSubmit))]
@@ -64,23 +69,34 @@ namespace syc_pm_client.Viewmodels
             try
             {
                 IsBusy = true;
+                if (string.Equals(Password, RepeatPassword) == false)
+                {
+                    ErrorMessage = "Passwords do not match.";
+                    return;
+                }
+                else if (Password!.Length < 8)
+                {
+                    ErrorMessage = "Password too short.";
+                    return;
+                }
+
                 ErrorMessage = null;
 
-                // 1. Master Key Derivation (PBKDF2)
+                // Master Key Derivation (PBKDF2)
                 byte[] pbkdf2Salt = new byte[16];
                 RandomNumberGenerator.Fill(pbkdf2Salt);
 
                 byte[] passwordBytes = Encoding.UTF8.GetBytes(Password!);
                 byte[] masterKey = Rfc2898DeriveBytes.Pbkdf2(passwordBytes, pbkdf2Salt, 10000, HashAlgorithmName.SHA256, 32);
 
-                // 2. Subkey Derivations (HKDF)
+                // Subkey Derivations (HKDF)
                 byte[] authInfo = Encoding.UTF8.GetBytes("auth");
                 byte[] authKey = HKDF.DeriveKey(HashAlgorithmName.SHA256, masterKey, 32, authInfo);
 
                 byte[] dataInfo = Encoding.UTF8.GetBytes("data");
                 byte[] dataKey = HKDF.DeriveKey(HashAlgorithmName.SHA256, masterKey, 32, dataInfo);
 
-                // 3. Authentication Hash (HMAC)
+                // Authentication Hash (HMAC)
                 byte[] passwordSalt = new byte[16];
                 RandomNumberGenerator.Fill(passwordSalt);
 
@@ -90,12 +106,12 @@ namespace syc_pm_client.Viewmodels
                     passwordHash = hmac.ComputeHash(authKey);
                 }
 
-                // 4. Public/Private Keypair Generation (RSA)
+                // Public/Private Keypair Generation (RSA)
                 using var rsa = RSA.Create(2048);
                 byte[] publicKey = rsa.ExportSubjectPublicKeyInfo();
                 byte[] privateKey = rsa.ExportPkcs8PrivateKey();
 
-                // 5. Private Key Encryption (AES-GCM)
+                // Private Key Encryption (AES-GCM)
                 byte[] nonce = new byte[12];
                 RandomNumberGenerator.Fill(nonce);
 
@@ -112,7 +128,6 @@ namespace syc_pm_client.Viewmodels
                 Buffer.BlockCopy(tag, 0, encryptedPrivateKey, 12, 16);
                 Buffer.BlockCopy(ciphertext, 0, encryptedPrivateKey, 28, ciphertext.Length);
 
-                // Send request
                 var requestData = new
                 {
                     username = Username,

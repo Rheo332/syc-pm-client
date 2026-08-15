@@ -16,6 +16,11 @@ namespace syc_pm_client.Views
             {
                 vm.Password = PasswordBox.Password;
             };
+
+            RepeatPasswordBox.PasswordChanged += (s, e) =>
+            {
+                vm.RepeatPassword = RepeatPasswordBox.Password;
+            };
         }
 
         private void Register_KeyDown(object sender, KeyRoutedEventArgs e)

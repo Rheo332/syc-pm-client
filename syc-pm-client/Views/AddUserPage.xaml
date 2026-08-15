@@ -21,12 +21,17 @@
                 <TextBlock FontSize="28" FontWeight="SemiBold" Text="Register" HorizontalAlignment="Center" Margin="0,0,0,8" />
 
                 <TextBox Header="Username" PlaceholderText="Enter Username" Text="{Binding Username, Mode=TwoWay}" KeyDown="Register_KeyDown" />
-                <PasswordBox Header="Password" PlaceholderText="Enter Password" PasswordChar="●" x:Name="PasswordBox" KeyDown="Register_KeyDown" />
-                <PasswordBox PlaceholderText="Repeat Password" PasswordChar="●" />
-
+                <PasswordBox PasswordRevealMode="Peek" Header="Password  (min. 8 chars)" PlaceholderText="Enter Password" PasswordChar="●" x:Name="PasswordBox" KeyDown="Register_KeyDown" />
+                <PasswordBox PasswordRevealMode="Peek" PlaceholderText="Repeat Password" PasswordChar="●" x:Name="RepeatPasswordBox" KeyDown="Register_KeyDown" />
+                <!--
+                    Peek Mode funktioniert nur beim ersten Eintippen des Passworts, aber anscheinend ist das von Microsoft so gewollt:
+                        "The password reveal button is shown only when the PasswordBox receives focus for the first time and a character is entered. 
+                         If the PasswordBox loses focus and then regains focus, the reveal button is not shown again unless the password is cleared 
+                         and character entry starts over."
+                    Quelle: https://learn.microsoft.com/en-us/windows/apps/develop/ui/controls/password-box#peek-mode
+                -->
                 <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}" TextWrapping="Wrap" />
                 <StackPanel Spacing="0">
-                    
                     <Button Content="Submit" Command="{Binding SubmitCommand}" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" Margin="0,12,0,0" />
                     <Button Content="Cancel" Command="{Binding CancelCommand}" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" Margin="0,12,0,0" />
                 </StackPanel>

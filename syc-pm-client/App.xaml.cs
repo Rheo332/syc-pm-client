@@ -6,9 +6,6 @@ using syc_pm_client.Services.Interfaces;
 using syc_pm_client.Viewmodels;
 using syc_pm_client.Views;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace syc_pm_client
 {
     /// <summary>
@@ -32,8 +29,8 @@ namespace syc_pm_client
                     // Shared HttpClient
                     services.AddSingleton(sp => new System.Net.Http.HttpClient
                     {
-                        //BaseAddress = new System.Uri("https://csy-projektarbeit.studlp2.hshl.de/")
-                        BaseAddress = new System.Uri("https://localhost:7166/")
+                        BaseAddress = new System.Uri("https://csy-projektarbeit.studlp2.hshl.de/")
+                        //BaseAddress = new System.Uri("https://localhost:7166/")
                     });
 
                     // Services
