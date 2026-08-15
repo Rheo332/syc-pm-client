@@ -1,6 +1,7 @@
 using Microsoft.UI.Xaml.Controls;
 using syc_pm_client.Models;
 using syc_pm_client.Viewmodels;
+using System;
 using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
 
@@ -56,5 +57,34 @@ public sealed partial class GiveAccessPage : Page
             }
         }
         _draggedEntry = null;
+    }
+
+    private async void DeleteUser_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        if (DataContext is GiveAccessViewModel vm)
+        {
+            if (vm.SelectedUser == null)
+            {
+                await vm.DeleteUser();
+            }
+            else
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "Delete User",
+                    Content = $"Are you sure you want to delete {vm.SelectedUser.Username}? This action cannot be undone.",
+                    PrimaryButtonText = "Delete",
+                    CloseButtonText = "Cancel",
+                    DefaultButton = ContentDialogButton.Close,
+                    XamlRoot = this.XamlRoot
+                };
+
+                var result = await dialog.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    await vm.DeleteUser();
+                }
+            }
+        }
     }
 }

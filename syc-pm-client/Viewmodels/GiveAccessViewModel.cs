@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using syc_pm_client.Models;
 using syc_pm_client.Services.Interfaces;
 using System;
@@ -269,12 +270,57 @@ namespace syc_pm_client.Viewmodels
                 IsBusy = false;
             }
         }
-    }
 
-    public class TargetUserDto
-    {
-        public Guid Id { get; set; }
-        public string Username { get; set; } = null!;
-        public string PublicKey { get; set; } = null!;
+        [RelayCommand]
+        public async Task<bool> DeleteUser()
+        {
+            try
+            {
+                IsBusy = true;
+                Message = null;
+
+                var user = _userSession.CurrentUser;
+                if (user != null)
+                {
+                    _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+                }
+
+                if (SelectedUser == null)
+                {
+                    Message = "No user selected to delete.";
+                    return false;
+                }
+
+                var response = await _http.DeleteAsync($"/api/users/{SelectedUser.Username}");
+                if (response.IsSuccessStatusCode)
+                {
+                    Users.Remove(SelectedUser);
+                    SelectedUser = null;
+                    Message = "User deleted successfully.";
+                    return true;
+                }
+                else
+                {
+                    Message = "Error: Failed to delete user.";
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Message = $"Error: {ex.Message}";
+                return false;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        public class TargetUserDto
+        {
+            public Guid Id { get; set; }
+            public string Username { get; set; } = null!;
+            public string PublicKey { get; set; } = null!;
+        }
     }
 }

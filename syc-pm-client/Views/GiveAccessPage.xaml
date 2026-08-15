@@ -42,41 +42,61 @@
                 FontWeight="SemiBold" />
         </StackPanel>
 
-        <Border
-            Grid.Row="1"
-            Style="{StaticResource CardStyle}"
-            Padding="20"
-            Margin="0,0,0,28"
-            MaxWidth="700"
-            HorizontalAlignment="Left">
+        <StackPanel 
+            Grid.Row="1" 
+            Orientation="Horizontal" 
+            Spacing="16">
+            <Border
+                Style="{StaticResource CardStyle}"
+                Padding="20"
+                Margin="0,0,0,28"
+                MaxWidth="700"
+                HorizontalAlignment="Left">
 
-            <Grid ColumnSpacing="20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="260" />
-                </Grid.ColumnDefinitions>
+                <Grid ColumnSpacing="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="240" />
+                    </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0"
-                            VerticalAlignment="Center"
-                            Spacing="4">
-                    <TextBlock
-                        Text="Select User"
-                        FontSize="16"
-                        FontWeight="SemiBold" />
+                    <StackPanel Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Spacing="4">
+                        <TextBlock
+                            Text="Select User"
+                            FontSize="16"
+                            FontWeight="SemiBold" />
 
-                </StackPanel>
+                    </StackPanel>
 
-                <ComboBox
-                    Grid.Column="1"
-                    ItemsSource="{Binding Users}"
-                    SelectedItem="{Binding SelectedUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    DisplayMemberPath="Username"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Center"
-                    MinHeight="40" />
-            </Grid>
-        </Border>
+                    <ComboBox
+                        Grid.Column="1"
+                        ItemsSource="{Binding Users}"
+                        SelectedItem="{Binding SelectedUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        DisplayMemberPath="Username"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        MinHeight="40" />
+                </Grid>
+            </Border>
 
+            <Border
+                Style="{StaticResource CardStyle}"
+                Padding="20"
+                Margin="0,0,0,28"
+                MaxWidth="700"
+                HorizontalAlignment="Left">
+                <Button
+                    Content="Delete User"
+                    MinHeight="40"
+                    Click="DeleteUser_Click"
+                    Padding="16,0"
+                    Background="#DC2626"
+                    Foreground="White"
+                    BorderThickness="0"
+                    FontWeight="SemiBold"/>
+            </Border>
+        </StackPanel>
         <Grid Grid.Row="2"
               ColumnSpacing="24">
             <Grid.ColumnDefinitions>

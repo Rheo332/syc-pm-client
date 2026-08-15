@@ -133,7 +133,7 @@ namespace syc_pm_client.Viewmodels
 
                 if (response.IsSuccessStatusCode)
                 {
-                    _nav.Navigate<MainPage>();
+                    _nav.Navigate<LoginPage>();
                 }
                 else
                 {
