@@ -14,107 +14,119 @@
 		<Border
 			HorizontalAlignment="Center"
 			VerticalAlignment="Center"
+            MaxHeight="700"
 			Width="360"
-			MaxHeight="700"
 			Padding="32"
 			CornerRadius="8"
 			Background="{ThemeResource LayerFillColorDefaultBrush}"
 			BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
 			BorderThickness="1">
 
-			<Grid RowDefinitions="Auto,*,Auto">
-				<TextBlock
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock
 					Text="Submit a Request"
 					FontSize="20"
 					FontWeight="Bold" />
 
-				<ScrollViewer
+                <ScrollViewer
 					Grid.Row="1"
+					VerticalAlignment="Stretch"
 					VerticalScrollBarVisibility="Auto"
 					HorizontalScrollBarVisibility="Disabled"
 					Padding="0,0,12,0"
 					Margin="0,16,0,16">
 
-					<StackPanel Spacing="16">
-
-						<ComboBox
+                    <StackPanel Spacing="10">
+                        <ComboBox
 							Header="Request Type"
 							SelectedItem="{Binding RequestType, Mode=TwoWay}"
 							HorizontalAlignment="Stretch">
 
-							<x:String>Add</x:String>
-							<x:String>Edit</x:String>
-							<x:String>Remove</x:String>
+                            <x:String>Add</x:String>
+                            <x:String>Edit</x:String>
+                            <x:String>Remove</x:String>
 
-						</ComboBox>
+                        </ComboBox>
 
-						<TextBox
+                        <TextBox
 							Header="Target Entry ID"
 							PlaceholderText="Required for Edit/Remove"
 							Text="{Binding TargetEntryId, Mode=TwoWay}"
 							Visibility="{Binding IsTargetIdVisible, Mode=OneWay}" />
 
-						<TextBox
+                        <TextBox
 							Header="Title"
 							PlaceholderText="Enter Title"
 							Text="{Binding Title, Mode=TwoWay}"
 							Visibility="{Binding IsFormVisible, Mode=OneWay}" />
 
-						<TextBox
+                        <TextBox
 							Header="Url"
 							PlaceholderText="Enter URL"
 							Text="{Binding Url, Mode=TwoWay}"
 							Visibility="{Binding IsFormVisible, Mode=OneWay}" />
 
-						<TextBox
+                        <TextBox
 							Header="Username"
 							PlaceholderText="Enter Username"
 							Text="{Binding Username, Mode=TwoWay}"
 							Visibility="{Binding IsFormVisible, Mode=OneWay}" />
 
-						<TextBox
-							Header="Password"
-							PlaceholderText="Enter Password"
-							Text="{Binding Password, Mode=TwoWay}"
-							Visibility="{Binding IsFormVisible, Mode=OneWay}" />
+                        <Grid Visibility="{Binding IsFormVisible, Mode=OneWay}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+								Header="Password"
+								PlaceholderText="Enter Password"
+								Text="{Binding Password, Mode=TwoWay}"
+                                Margin="0,0,8,0"/>
 
-						<TextBox
+                            <Button
+                                Grid.Column="1" 
+								Command="{Binding GeneratePasswordCommand}"
+								Padding="5,5"
+                                VerticalAlignment="Bottom">
+                                <SymbolIcon Symbol="Shuffle" />
+                            </Button>
+                        </Grid>
+
+                        <TextBox
 							Header="Description (optional)"
 							PlaceholderText="Enter Description"
 							Text="{Binding Description, Mode=TwoWay}"
 							Visibility="{Binding IsFormVisible, Mode=OneWay}" />
 
-						<TextBlock
+                        <TextBlock
 							Foreground="{ThemeResource SystemFillColorCriticalBrush}"
 							Text="{Binding ErrorMessage}"
 							Visibility="{Binding HasError, Mode=OneWay}"
 							TextWrapping="Wrap" />
+                    </StackPanel>
+                </ScrollViewer>
 
-					</StackPanel>
-
-				</ScrollViewer>
-
-				<!-- Buttons -->
-				<StackPanel
+                <StackPanel
 					Grid.Row="2"
-					Spacing="8">
-
-					<Button
+					Spacing="8"
+                    VerticalAlignment="Bottom">
+                    <Button
 						Content="Submit Request"
 						Command="{Binding SubmitCommand}"
 						Style="{StaticResource AccentButtonStyle}"
 						HorizontalAlignment="Stretch" />
-
-					<Button
+                    <Button
 						Content="Cancel"
 						Command="{Binding CancelCommand}"
 						Style="{StaticResource AccentButtonStyle}"
 						HorizontalAlignment="Stretch" />
-
-				</StackPanel>
-
-			</Grid>
-
-		</Border>
+                </StackPanel>
+            </Grid>
+        </Border>
 	</Grid>
 </Page>

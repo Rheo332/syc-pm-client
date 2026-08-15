@@ -46,6 +46,12 @@ namespace syc_pm_client.Viewmodels
         [ObservableProperty]
         public partial string? Password { get; set; }
 
+        [RelayCommand]
+        private void GeneratePassword()
+        {
+            Password = PasswordGenerator.GeneratePassword(16);
+        }
+
         [ObservableProperty]
         public partial string? Description { get; set; }
 

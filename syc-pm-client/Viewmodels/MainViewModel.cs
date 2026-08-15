@@ -56,6 +56,11 @@ namespace syc_pm_client.Viewmodels
                     var vm = (MakeRequestViewModel)page.DataContext;
                     vm.RequestType = "Remove";
                     vm.TargetEntryId = SelectedAccount.Id.ToString();
+                    vm.Title = SelectedAccount.Name;
+                    vm.Url = SelectedAccount.URL;
+                    vm.Username = SelectedAccount.Username;
+                    vm.Password = SelectedAccount.Password;
+                    vm.Description = SelectedAccount.Notes;
                 });
             }
         }

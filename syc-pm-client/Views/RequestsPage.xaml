@@ -19,6 +19,15 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal" Padding="20" Spacing="20">
             <!--<Button Content="Back" Command="{Binding BackCommand}" Style="{StaticResource AccentButtonStyle}" />-->
             <TextBlock Text="Pending Requests" FontSize="24" VerticalAlignment="Center" />
+            <Button
+                Click="Refresh_Click"
+                ToolTipService.ToolTip="Refresh"
+                Margin="12,4,0,0"
+                Background="Transparent"
+                BorderThickness="0"
+                Padding="8">
+                <SymbolIcon Symbol="Refresh" />
+            </Button>
             <ProgressRing IsActive="{Binding IsBusy}" Width="24" Height="24" VerticalAlignment="Center" />
         </StackPanel>
 

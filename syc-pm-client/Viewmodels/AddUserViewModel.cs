@@ -37,6 +37,14 @@ namespace syc_pm_client.Viewmodels
         [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
         public partial string? RepeatPassword { get; set; }
 
+        [RelayCommand]
+        private void GeneratePassword()
+        {
+            var generated = Services.PasswordGenerator.GeneratePassword(16);
+            Password = generated;
+            RepeatPassword = generated;
+        }
+
         private bool _isBusy;
         public bool IsBusy
         {
