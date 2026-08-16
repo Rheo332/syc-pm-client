@@ -4,6 +4,7 @@ using syc_pm_client.Services.Interfaces;
 using syc_pm_client.Views;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace syc_pm_client.Viewmodels
@@ -22,6 +23,67 @@ namespace syc_pm_client.Viewmodels
         }
 
         public bool IsAdmin => _userSession.IsAdmin;
+
+        [ObservableProperty]
+        public partial string FilterText { get; set; } = string.Empty;
+
+        partial void OnFilterTextChanged(string value)
+        {
+            if (string.IsNullOrWhiteSpace(FilterText))
+            {
+                if (Accounts != null && _allAccounts != null)
+                    foreach (var account in _allAccounts)
+                    {
+                        if (!Accounts.Contains(account))
+                        {
+                            Accounts.Add(account);
+                        }
+                    }
+            }
+            else
+            {
+                RemoveNonFilteredAccounts();
+                AddFilteredAccounts();
+            }
+        }
+
+        private void RemoveNonFilteredAccounts()
+        {
+            if (_allAccounts == null || _allAccounts.Count == 0 || Accounts == null || Accounts.Count == 0)
+            {
+                return;
+            }
+            var filteredAccounts = _allAccounts.Where(entry =>
+                entry.Name.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                entry.Username.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                entry.URL.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                entry.Notes.Contains(FilterText, StringComparison.OrdinalIgnoreCase)).ToList();
+            var accountsToRemove = Accounts.Where(a => !filteredAccounts.Contains(a)).ToList();
+            foreach (var account in accountsToRemove)
+            {
+                Accounts.Remove(account);
+            }
+        }
+
+        private void AddFilteredAccounts()
+        {
+            if (_allAccounts == null || _allAccounts.Count == 0 || Accounts == null || Accounts.Count == 0)
+            {
+                return;
+            }
+            var filteredAccounts = _allAccounts.Where(entry =>
+                entry.Name.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                entry.Username.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                entry.URL.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                entry.Notes.Contains(FilterText, StringComparison.OrdinalIgnoreCase)).ToList();
+            foreach (var account in filteredAccounts)
+            {
+                if (!Accounts.Contains(account))
+                {
+                    Accounts.Add(account);
+                }
+            }
+        }
 
         [RelayCommand]
         private async Task AddEntry()
@@ -105,6 +167,8 @@ namespace syc_pm_client.Viewmodels
         [ObservableProperty]
         public partial ObservableCollection<Account>? Accounts { get; set; } = new();
 
+        private ObservableCollection<Account>? _allAccounts = [];
+
         [ObservableProperty]
         public partial Account? SelectedAccount { get; set; }
 
@@ -126,6 +190,10 @@ namespace syc_pm_client.Viewmodels
                 });
             }
 
+            if (Accounts?.Count > 0)
+            {
+                _allAccounts = [with(Accounts)];
+            }
             return true;
         }
     }

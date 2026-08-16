@@ -113,7 +113,8 @@
                         x:Name="SearchBox"
                         Grid.Row="0"
                         PlaceholderText="Search accounts..."
-                        Margin="0,0,0,12" />
+                        Margin="0,0,0,12"
+                        Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <ListView
                         x:Name="AccountsList"
                         Grid.Row="1"
