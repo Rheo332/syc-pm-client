@@ -27,7 +27,7 @@ namespace syc_pm_client
             var hWnd = WindowNative.GetWindowHandle(this);
             var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
             var appWindow = AppWindow.GetFromWindowId(windowId);
-            appWindow.Resize(new Windows.Graphics.SizeInt32(1250, 800));
+            appWindow.Resize(new Windows.Graphics.SizeInt32(1250, 720));
 
             if (appWindow.Presenter is OverlappedPresenter presenter)
             {
