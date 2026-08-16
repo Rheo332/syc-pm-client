@@ -21,6 +21,8 @@ namespace syc_pm_client.Viewmodels
             _pwEntryService = pwEntryService;
         }
 
+        public bool IsAdmin => _userSession.IsAdmin;
+
         [RelayCommand]
         private async Task AddEntry()
         {

@@ -10,6 +10,8 @@ namespace syc_pm_client.Services
 
         public User? CurrentUser { get; private set; }
 
+        public bool IsAdmin => CurrentUser?.Username == "admin";
+
         public bool IsLoggedIn => CurrentUser != null;
 
         public void Login(User user)

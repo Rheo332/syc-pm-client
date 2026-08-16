@@ -7,6 +7,7 @@ namespace syc_pm_client.Services.Interfaces
     {
         event Action OnSessionChanged;
         User? CurrentUser { get; }
+        bool IsAdmin { get; }
         void Login(User user);
         void Logout();
     }

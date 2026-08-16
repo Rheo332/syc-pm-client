@@ -59,6 +59,7 @@
                 -->
                 <Button
                     Command="{Binding OpenGiveAccessCommand}"
+                    IsEnabled="{Binding IsAdmin}"
                     ToolTipService.ToolTip="Manage access">
                     <StackPanel
                         Orientation="Horizontal"
@@ -69,6 +70,7 @@
                 </Button>
                 <Button
                     Command="{Binding OpenRequestsCommand}"
+                    IsEnabled="{Binding IsAdmin}"
                     ToolTipService.ToolTip="Manage requests">
                     <StackPanel
                         Orientation="Horizontal"
