@@ -5,14 +5,18 @@
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>syc_pm_client</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Platforms>x86;x64;ARM64</Platforms>
-    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <Platforms>x86;x64</Platforms>
+	<PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <WinUISDKReferences>false</WinUISDKReferences>
-    <EnableMsixTooling>true</EnableMsixTooling>
+    <EnableMsixTooling>false</EnableMsixTooling>
     <Nullable>enable</Nullable>
 	<LangVersion>preview</LangVersion>
+	<WindowsPackageType>None</WindowsPackageType>
+	<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+	<SelfContained>true</SelfContained>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Views\AddEntryPage.xaml" />
@@ -79,7 +83,7 @@
     <PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>
     <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
     <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
-    <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
+    <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">False</PublishTrimmed>
   </PropertyGroup>
   <ItemGroup>
     <EditorConfigFiles Remove="$(ProjectDir).editorconfig" />
