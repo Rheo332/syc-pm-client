@@ -6,9 +6,15 @@
     xmlns:local="using:syc_pm_client.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="using:syc_pm_client.Viewmodels"
-    d:DataContext="{d:DesignInstance Type=viewmodels:MakeRequestViewModel}"
-    mc:Ignorable="d">
+	xmlns:viewmodels="using:syc_pm_client.Viewmodels"
+	xmlns:converters="using:syc_pm_client.Converters"
+	d:DataContext="{d:DesignInstance Type=viewmodels:MakeRequestViewModel}"
+	mc:Ignorable="d">
+
+	<Page.Resources>
+		<converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+		<converters:BoolToInvertedVisibilityConverter x:Key="BoolToInvertedVisibilityConverter" />
+	</Page.Resources>
 
 	<Grid>
 		<Border
@@ -111,16 +117,23 @@
                     </StackPanel>
                 </ScrollViewer>
 
-                <StackPanel
+				<StackPanel
 					Grid.Row="2"
 					Spacing="8"
-                    VerticalAlignment="Bottom">
-                    <Button
+					VerticalAlignment="Bottom">
+					<Button
+						Visibility="{Binding IsAdmin, Converter={StaticResource BoolToInvertedVisibilityConverter}}"
 						Content="Submit Request"
 						Command="{Binding SubmitCommand}"
 						Style="{StaticResource AccentButtonStyle}"
 						HorizontalAlignment="Stretch" />
-                    <Button
+					<Button
+						Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}"
+						Content="Submit"
+						Command="{Binding SubmitCommand}"
+						Style="{StaticResource AccentButtonStyle}"
+						HorizontalAlignment="Stretch" />
+					<Button
 						Content="Cancel"
 						Command="{Binding CancelCommand}"
 						Style="{StaticResource AccentButtonStyle}"

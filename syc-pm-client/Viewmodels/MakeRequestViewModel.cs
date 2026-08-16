@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using syc_pm_client.DTOs;
+using syc_pm_client.Models;
 using syc_pm_client.Services;
 using syc_pm_client.Services.Interfaces;
 using System;
@@ -12,15 +13,19 @@ namespace syc_pm_client.Viewmodels
     public partial class MakeRequestViewModel : ObservableObject
     {
         private readonly IRequestService _requestService;
+        private readonly IPwEntryService _pwEntryService;
         private readonly INavigationService _nav;
         private readonly IUserSessionService _userSession;
 
-        public MakeRequestViewModel(IRequestService requestService, INavigationService nav, IUserSessionService userSession)
+        public MakeRequestViewModel(IRequestService requestService, IPwEntryService pwEntryService, INavigationService nav, IUserSessionService userSession)
         {
             _requestService = requestService;
+            _pwEntryService = pwEntryService;
             _nav = nav;
             _userSession = userSession;
         }
+
+        public bool IsAdmin => _userSession.IsAdmin;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsTargetIdVisible))]
@@ -80,40 +85,75 @@ namespace syc_pm_client.Viewmodels
                 ErrorMessage = string.Empty;
                 OnPropertyChanged(nameof(HasError));
 
-                var adminPubKey = await _requestService.GetAdminPublicKey();
-                var encryptedPwd = AdminCryptoHelper.EncryptPassword(Password!, adminPubKey);
-
                 Guid? parsedId = null;
                 if (Guid.TryParse(TargetEntryId, out var id))
                 {
                     parsedId = id;
                 }
 
-                var payloadObj = new EntryPayload
-                {
-                    EntryId = parsedId,
-                    Title = Title ?? string.Empty,
-                    Url = Url ?? string.Empty,
-                    Username = Username ?? string.Empty,
-                    EncryptedPassword = encryptedPwd ?? string.Empty,
-                    Description = Description ?? string.Empty
-                };
+                bool success = false;
 
-                var request = new RequestDto
+                if (IsAdmin)
                 {
-                    Type = RequestType ?? string.Empty,
-                    Username = _userSession.CurrentUser?.Username ?? "Unknown",
-                    Payload = JsonSerializer.Serialize(payloadObj)
-                };
+                    if (RequestType == "Add")
+                    {
+                        success = await _pwEntryService.AddPwEntry(new PwEntry
+                        {
+                            Title = Title ?? string.Empty,
+                            Url = Url ?? string.Empty,
+                            Username = Username ?? string.Empty,
+                            EncryptedPassword = Password ?? string.Empty,
+                            Description = Description ?? string.Empty
+                        });
+                    }
+                    else if (RequestType == "Edit" && parsedId.HasValue)
+                    {
+                        success = await _pwEntryService.UpdatePwEntry(parsedId.Value, new PwEntry
+                        {
+                            Title = Title ?? string.Empty,
+                            Url = Url ?? string.Empty,
+                            Username = Username ?? string.Empty,
+                            EncryptedPassword = Password ?? string.Empty,
+                            Description = Description ?? string.Empty
+                        });
+                    }
+                    else if (RequestType == "Remove" && parsedId.HasValue)
+                    {
+                        success = await _pwEntryService.DeletePwEntry(parsedId.Value);
+                    }
+                }
+                else
+                {
+                    var adminPubKey = await _requestService.GetAdminPublicKey();
+                    var encryptedPwd = AdminCryptoHelper.EncryptPassword(Password!, adminPubKey);
 
-                var success = await _requestService.CreateRequest(request);
+                    var payloadObj = new EntryPayload
+                    {
+                        EntryId = parsedId,
+                        Title = Title ?? string.Empty,
+                        Url = Url ?? string.Empty,
+                        Username = Username ?? string.Empty,
+                        EncryptedPassword = encryptedPwd ?? string.Empty,
+                        Description = Description ?? string.Empty
+                    };
+
+                    var request = new RequestDto
+                    {
+                        Type = RequestType ?? string.Empty,
+                        Username = _userSession.CurrentUser?.Username ?? "Unknown",
+                        Payload = JsonSerializer.Serialize(payloadObj)
+                    };
+
+                    success = await _requestService.CreateRequest(request);
+                }
+
                 if (success)
                 {
                     _nav.Navigate<Views.MainPage>();
                 }
                 else
                 {
-                    ErrorMessage = "Failed to submit request.";
+                    ErrorMessage = IsAdmin ? "Failed to apply changes." : "Failed to submit request.";
                     OnPropertyChanged(nameof(HasError));
                 }
             }
