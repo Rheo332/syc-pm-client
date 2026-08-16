@@ -215,15 +215,10 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <labs:Marquee 
-                                        Behavior="Bouncing"
-                                        RepeatBehavior="Forever"
-                                        Direction="Left"
-                                        AutoPlay="True"
-                                        Speed="50"
-                                        FontSize="26"
+                                    <TextBlock 
+                                        FontSize="18"
                                         FontWeight="SemiBold"
-                                        Content="{Binding SelectedAccount.Name}" />
+                                        Text="{Binding SelectedAccount.Name}" />
                                     <Button
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
