@@ -29,13 +29,24 @@
                         Background="Transparent"
                         Click="LogoutButton_Click"
                         Visibility="Collapsed"
+                        ToolTipService.ToolTip="Logout"
+                        Margin="-10,0,0,0">
+                    <FontIcon Glyph="&#xF3B1;" />
+                </Button>
+                <Button x:Name="BackButton"
+                        BorderThickness="0"
+                        Width="38"
+                        Height="32"
+                        Padding="8"
+                        Background="Transparent"
+                        Click="BackButton_Click"
+                        Visibility="Collapsed"
                         ToolTipService.ToolTip="Back"
                         Margin="-10,0,0,0">
                     <FontIcon Glyph="&#xE72B;" />
                 </Button>
             </StackPanel>
         </Grid>
-
         <Frame x:Name="MainFrame" Grid.Row="1"/>
     </Grid>
 </Window>

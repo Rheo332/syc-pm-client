@@ -7,6 +7,7 @@ namespace syc_pm_client.Services
 {
     public class NavigationService : INavigationService
     {
+        public event Action? OnNavigate;
         private readonly IServiceProvider _provider;
         private Frame? _frame;
 
@@ -22,6 +23,7 @@ namespace syc_pm_client.Services
 
         public void Navigate<T>(Action<T>? configure = null) where T : Page
         {
+            OnNavigate?.Invoke();
             var page = _provider.GetRequiredService<T>();
             if (configure != null)
             {

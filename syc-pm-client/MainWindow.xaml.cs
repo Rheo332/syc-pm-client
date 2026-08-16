@@ -19,6 +19,7 @@ namespace syc_pm_client
             _userSession = userSession;
 
             _userSession.OnSessionChanged += UserSession_OnSessionChanged;
+            _nav.OnNavigate += Navigation_OnNavigate;
 
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(TitleBar);
@@ -42,28 +43,42 @@ namespace syc_pm_client
 
         private void UserSession_OnSessionChanged()
         {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                UpdateLogoutButtonVisibility();
-            });
+            DispatcherQueue.TryEnqueue(UpdateLogoutButtonVisibility);
+        }
+
+        private void Navigation_OnNavigate()
+        {
+            DispatcherQueue.TryEnqueue(UpdateLogoutButtonVisibility);
         }
 
         private void UpdateLogoutButtonVisibility()
         {
-            LogoutButton.Visibility = _userSession.CurrentUser != null ? Visibility.Visible : Visibility.Collapsed;
+            if (_userSession.CurrentUser == null)
+            {
+                LogoutButton.Visibility = Visibility.Collapsed;
+                BackButton.Visibility = Visibility.Collapsed;
+            }
+            else if (MainFrame.Content is MainPage)
+            {
+                LogoutButton.Visibility = Visibility.Visible;
+                BackButton.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                LogoutButton.Visibility = Visibility.Collapsed;
+                BackButton.Visibility = Visibility.Visible;
+            }
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            if (MainFrame.Content is MainPage)
-            {
-                _userSession.Logout();
-                _nav.Navigate<LoginPage>();
-            }
-            else
-            {
-                _nav.Navigate<MainPage>();
-            }
+            _userSession.Logout();
+            _nav.Navigate<LoginPage>();
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            _nav.Navigate<MainPage>();
         }
     }
 }
